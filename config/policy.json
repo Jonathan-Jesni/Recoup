@@ -1,0 +1,7 @@
+{
+  "description": "Stopping rules. Enforced as pure functions in recoup/policy.py, unit tested. Never enforced in a prompt.",
+  "max_attempts_per_checkout": 2,
+  "cooldown_minutes": 30,
+  "min_amount_paise": 5000,
+  "on_exhausted_attempts": "escalate_and_stop"
+}

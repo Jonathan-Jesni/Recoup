@@ -1,0 +1,12 @@
+{
+  "assumptions_note": "SIMULATION MODEL, not observed data. Conversion probabilities are authored assumptions, loosely shaped by publicly discussed industry retry/recovery rates: matched interventions convert meaningfully better than blind retries, second attempts convert worse than first, and nudges on true abandonment outperform retries on hard declines. Every batch number in this project derived from these values is labelled simulated. One recovery in the repo is observed for real via a test-mode payment link paid with a test card; it is flagged observed:true in the ledger.",
+  "seed": 20260831,
+  "second_attempt_decay": 0.6,
+  "conversion": {
+    "card_declined":      { "retry_alternate_instrument": 0.35, "retry_same_cooldown": 0.10, "recovery_nudge": 0.12, "offer_emi": 0.20, "escalate_human": 0.05 },
+    "auth_timeout":       { "retry_alternate_instrument": 0.25, "retry_same_cooldown": 0.40, "recovery_nudge": 0.30, "offer_emi": 0.15, "escalate_human": 0.05 },
+    "insufficient_funds": { "retry_alternate_instrument": 0.15, "retry_same_cooldown": 0.20, "recovery_nudge": 0.10, "offer_emi": 0.35, "escalate_human": 0.05 },
+    "gateway_drop":       { "retry_alternate_instrument": 0.30, "retry_same_cooldown": 0.45, "recovery_nudge": 0.20, "offer_emi": 0.15, "escalate_human": 0.05 },
+    "silent_abandonment": { "retry_alternate_instrument": 0.08, "retry_same_cooldown": 0.05, "recovery_nudge": 0.22, "offer_emi": 0.12, "escalate_human": 0.02 }
+  }
+}

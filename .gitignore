@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+venv/
+.venv/
+node_modules/
+.next/
+dashboard/out/
+.DS_Store
+runs/**/ledger.db

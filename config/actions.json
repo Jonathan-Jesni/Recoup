@@ -1,0 +1,43 @@
+{
+  "description": "The complete recovery action menu. The Diagnosis LLM may select ONLY from these ids; anything else is rejected in code and falls back deterministically.",
+  "actions": [
+    {
+      "id": "retry_alternate_instrument",
+      "label": "Retry on alternate instrument",
+      "mechanism": "razorpay_payment_link",
+      "detail": "Payment link steering the customer to a different method (e.g. card failed -> offer UPI)."
+    },
+    {
+      "id": "retry_same_cooldown",
+      "label": "Retry same instrument after cooldown",
+      "mechanism": "razorpay_payment_link",
+      "detail": "Payment link for the same method, sent only after the 30-minute cooldown."
+    },
+    {
+      "id": "recovery_nudge",
+      "label": "Recovery nudge",
+      "mechanism": "razorpay_payment_link",
+      "detail": "Payment link with a short Hinglish nudge message for abandoned checkouts."
+    },
+    {
+      "id": "offer_emi",
+      "label": "Offer EMI / lower-friction option",
+      "mechanism": "razorpay_payment_link",
+      "detail": "Payment link framed around EMI/instalments for high-value declines."
+    },
+    {
+      "id": "escalate_human",
+      "label": "Escalate to human",
+      "mechanism": "none",
+      "detail": "No API call. Writes an escalation record with a mandatory reason."
+    }
+  ],
+  "fallback_by_failure_type": {
+    "card_declined": "retry_alternate_instrument",
+    "auth_timeout": "retry_same_cooldown",
+    "insufficient_funds": "retry_same_cooldown",
+    "gateway_drop": "retry_same_cooldown",
+    "silent_abandonment": "recovery_nudge",
+    "unclassified": "escalate_human"
+  }
+}

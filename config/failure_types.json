@@ -1,0 +1,22 @@
+{
+  "description": "Deterministic classification rules. Signal agent matches rules top-down; first match wins. No LLM here by design: error codes are a lookup problem, not a reasoning problem.",
+  "types": [
+    "card_declined",
+    "auth_timeout",
+    "insufficient_funds",
+    "gateway_drop",
+    "silent_abandonment"
+  ],
+  "rules": [
+    { "match": { "payment_attempted": false }, "type": "silent_abandonment" },
+    { "match": { "error_source": "issuer", "error_reason": "insufficient_funds" }, "type": "insufficient_funds" },
+    { "match": { "error_source": "issuer", "error_reason": "wallet_insufficient_balance" }, "type": "insufficient_funds" },
+    { "match": { "error_source": "issuer" }, "type": "card_declined" },
+    { "match": { "error_source": "customer", "error_reason": "authentication_timeout" }, "type": "auth_timeout" },
+    { "match": { "error_source": "customer", "error_reason": "otp_expired" }, "type": "auth_timeout" },
+    { "match": { "error_source": "customer", "error_reason": "payment_cancelled" }, "type": "auth_timeout" },
+    { "match": { "error_source": "gateway" }, "type": "gateway_drop" },
+    { "match": { "error_source": "network" }, "type": "gateway_drop" }
+  ],
+  "unmatched": "unclassified"
+}
