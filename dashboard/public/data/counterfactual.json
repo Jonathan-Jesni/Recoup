@@ -1,0 +1,2133 @@
+{
+ "agent_run": "smoke-agent",
+ "baseline_run": "smoke-baseline",
+ "classes": {
+  "agent_won": 18,
+  "baseline_won": 0,
+  "both": 19,
+  "neither": 63
+ },
+ "net_delta_inr": 99883.0,
+ "paired_draws": true,
+ "checkouts": [
+  {
+   "checkout_id": "chk_8310000",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 564.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310001",
+   "failure_type": "insufficient_funds",
+   "amount_inr": 7634.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310002",
+   "failure_type": "card_declined",
+   "amount_inr": 8615.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310003",
+   "failure_type": "unclassified",
+   "amount_inr": 256.0,
+   "class": "neither",
+   "agent": {
+    "actions": [],
+    "recovered": false,
+    "final": "unclassified"
+   },
+   "baseline": {
+    "actions": [],
+    "recovered": false,
+    "final": "unclassified"
+   }
+  },
+  {
+   "checkout_id": "chk_8310004",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 9742.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310005",
+   "failure_type": "unclassified",
+   "amount_inr": 9629.0,
+   "class": "neither",
+   "agent": {
+    "actions": [],
+    "recovered": false,
+    "final": "unclassified"
+   },
+   "baseline": {
+    "actions": [],
+    "recovered": false,
+    "final": "unclassified"
+   }
+  },
+  {
+   "checkout_id": "chk_8310006",
+   "failure_type": "card_declined",
+   "amount_inr": 5455.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310007",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 2108.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310008",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 2209.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310009",
+   "failure_type": "gateway_drop",
+   "amount_inr": 43606.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310010",
+   "failure_type": "card_declined",
+   "amount_inr": 415.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310011",
+   "failure_type": "card_declined",
+   "amount_inr": 214.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310012",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 778.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310013",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 6866.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310014",
+   "failure_type": "card_declined",
+   "amount_inr": 327.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310015",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 13855.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310016",
+   "failure_type": "gateway_drop",
+   "amount_inr": 593.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310017",
+   "failure_type": "card_declined",
+   "amount_inr": 2199.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310018",
+   "failure_type": "unclassified",
+   "amount_inr": 6296.0,
+   "class": "neither",
+   "agent": {
+    "actions": [],
+    "recovered": false,
+    "final": "unclassified"
+   },
+   "baseline": {
+    "actions": [],
+    "recovered": false,
+    "final": "unclassified"
+   }
+  },
+  {
+   "checkout_id": "chk_8310019",
+   "failure_type": "insufficient_funds",
+   "amount_inr": 1408.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310020",
+   "failure_type": "insufficient_funds",
+   "amount_inr": 2007.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310021",
+   "failure_type": "card_declined",
+   "amount_inr": 157.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310022",
+   "failure_type": "card_declined",
+   "amount_inr": 20.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "below_minimum"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "below_minimum"
+   }
+  },
+  {
+   "checkout_id": "chk_8310023",
+   "failure_type": "card_declined",
+   "amount_inr": 7063.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310024",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 2208.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310025",
+   "failure_type": "insufficient_funds",
+   "amount_inr": 2191.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310026",
+   "failure_type": "card_declined",
+   "amount_inr": 175.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310027",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 4999.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310028",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 326.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310029",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 1437.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310030",
+   "failure_type": "card_declined",
+   "amount_inr": 1013.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310031",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 631.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310032",
+   "failure_type": "card_declined",
+   "amount_inr": 3514.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310033",
+   "failure_type": "card_declined",
+   "amount_inr": 319.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310034",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 778.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310035",
+   "failure_type": "auth_timeout",
+   "amount_inr": 113.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310036",
+   "failure_type": "card_declined",
+   "amount_inr": 7773.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310037",
+   "failure_type": "unclassified",
+   "amount_inr": 2406.0,
+   "class": "neither",
+   "agent": {
+    "actions": [],
+    "recovered": false,
+    "final": "unclassified"
+   },
+   "baseline": {
+    "actions": [],
+    "recovered": false,
+    "final": "unclassified"
+   }
+  },
+  {
+   "checkout_id": "chk_8310038",
+   "failure_type": "auth_timeout",
+   "amount_inr": 489.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310039",
+   "failure_type": "card_declined",
+   "amount_inr": 109.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310040",
+   "failure_type": "card_declined",
+   "amount_inr": 47.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "below_minimum"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "below_minimum"
+   }
+  },
+  {
+   "checkout_id": "chk_8310041",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 947.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310042",
+   "failure_type": "card_declined",
+   "amount_inr": 33.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "below_minimum"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "below_minimum"
+   }
+  },
+  {
+   "checkout_id": "chk_8310043",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 18180.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310044",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 517.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310045",
+   "failure_type": "auth_timeout",
+   "amount_inr": 1776.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310046",
+   "failure_type": "card_declined",
+   "amount_inr": 39757.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310047",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 2416.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310048",
+   "failure_type": "auth_timeout",
+   "amount_inr": 34.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "below_minimum"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "below_minimum"
+   }
+  },
+  {
+   "checkout_id": "chk_8310049",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 674.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310050",
+   "failure_type": "card_declined",
+   "amount_inr": 1135.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310051",
+   "failure_type": "auth_timeout",
+   "amount_inr": 27.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "below_minimum"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "below_minimum"
+   }
+  },
+  {
+   "checkout_id": "chk_8310052",
+   "failure_type": "insufficient_funds",
+   "amount_inr": 752.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310053",
+   "failure_type": "gateway_drop",
+   "amount_inr": 1775.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310054",
+   "failure_type": "gateway_drop",
+   "amount_inr": 694.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310055",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 2531.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310056",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 8275.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310057",
+   "failure_type": "gateway_drop",
+   "amount_inr": 9224.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310058",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 312.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310059",
+   "failure_type": "unclassified",
+   "amount_inr": 1472.0,
+   "class": "neither",
+   "agent": {
+    "actions": [],
+    "recovered": false,
+    "final": "unclassified"
+   },
+   "baseline": {
+    "actions": [],
+    "recovered": false,
+    "final": "unclassified"
+   }
+  },
+  {
+   "checkout_id": "chk_8310060",
+   "failure_type": "gateway_drop",
+   "amount_inr": 4765.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310061",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 8835.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310062",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 695.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310063",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 594.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310064",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 775.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310065",
+   "failure_type": "card_declined",
+   "amount_inr": 1206.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310066",
+   "failure_type": "card_declined",
+   "amount_inr": 8668.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310067",
+   "failure_type": "card_declined",
+   "amount_inr": 112.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310068",
+   "failure_type": "card_declined",
+   "amount_inr": 7045.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310069",
+   "failure_type": "card_declined",
+   "amount_inr": 2299.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310070",
+   "failure_type": "insufficient_funds",
+   "amount_inr": 1727.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310071",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 200.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310072",
+   "failure_type": "card_declined",
+   "amount_inr": 9042.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310073",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 316.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310074",
+   "failure_type": "card_declined",
+   "amount_inr": 1448.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310075",
+   "failure_type": "card_declined",
+   "amount_inr": 2807.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310076",
+   "failure_type": "gateway_drop",
+   "amount_inr": 637.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310077",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 2762.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310078",
+   "failure_type": "card_declined",
+   "amount_inr": 269.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310079",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 103.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310080",
+   "failure_type": "gateway_drop",
+   "amount_inr": 420.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310081",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 701.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310082",
+   "failure_type": "gateway_drop",
+   "amount_inr": 539.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310083",
+   "failure_type": "auth_timeout",
+   "amount_inr": 239.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310084",
+   "failure_type": "gateway_drop",
+   "amount_inr": 697.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310085",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 3060.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310086",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 455.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310087",
+   "failure_type": "card_declined",
+   "amount_inr": 277.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310088",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 4212.0,
+   "class": "agent_won",
+   "agent": {
+    "actions": [
+     "recovery_nudge"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310089",
+   "failure_type": "gateway_drop",
+   "amount_inr": 406.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310090",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 19160.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310091",
+   "failure_type": "card_declined",
+   "amount_inr": 515.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310092",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 1897.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310093",
+   "failure_type": "silent_abandonment",
+   "amount_inr": 335.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "recovery_nudge",
+     "recovery_nudge"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310094",
+   "failure_type": "insufficient_funds",
+   "amount_inr": 2607.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310095",
+   "failure_type": "gateway_drop",
+   "amount_inr": 272.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "chk_8310096",
+   "failure_type": "gateway_drop",
+   "amount_inr": 34583.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310097",
+   "failure_type": "gateway_drop",
+   "amount_inr": 2067.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310098",
+   "failure_type": "auth_timeout",
+   "amount_inr": 46112.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310099",
+   "failure_type": "auth_timeout",
+   "amount_inr": 759.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  }
+ ]
+}

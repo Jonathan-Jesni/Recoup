@@ -100,5 +100,16 @@
       "chk_8310059"
     ]
   },
-  "simulated_outcomes": true
+  "simulated_outcomes": true,
+  "llm": {
+    "model": "accounts/fireworks/models/llama-v3p3-70b-instruct",
+    "calls": 0,
+    "cache_hits": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "cost_inr": 0.0,
+    "assumed_usd_per_m_tokens": 0.9,
+    "assumed_usd_inr": 88.0
+  },
+  "inference_cost_per_100_inr_recovered": 0.0
 }
