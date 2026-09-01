@@ -145,6 +145,10 @@ def run(
         "exception_count": sum(len(v) for v in exceptions.values()),
         "exceptions": {k: sorted(v) for k, v in sorted(exceptions.items())},
         "simulated_outcomes": True,
+        "llm": llm.usage(),
+        "inference_cost_per_100_inr_recovered": (
+            round(llm.cost_inr() / (stats["recovered_paise"] / 100) * 100, 4)
+            if stats["recovered_paise"] else None),
     }
     (run_dir / "run.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     ledger.close()
@@ -174,6 +178,65 @@ def compare(agent_run: str, baseline_run: str):
               "recovered_count", "exception_count", "llm_fallbacks"):
         print(f"{k:24} {a[k]:>12} {b[k]:>12}")
     print(f"{'delta_recovered_inr':24} {round(a['recovered_inr'] - b['recovered_inr'], 2):>12}")
+
+
+def _per_checkout(run_id: str) -> dict[str, dict]:
+    """Collapse a run's audit log into one record per checkout."""
+    ledger = Ledger(ROOT / "runs" / run_id / "ledger.db", run_id)
+    out: dict[str, dict] = {}
+    for r in ledger.rows():
+        rec = out.setdefault(r["checkout_id"], {
+            "failure_type": None, "amount_paise": None, "actions": [],
+            "recovered": False, "final": None})
+        p = r["payload"]
+        if r["agent"] == "signal":
+            rec["failure_type"] = p["failure_type"]
+            rec["amount_paise"] = p["event"]["amount_paise"]
+        elif r["agent"] == "diagnosis":
+            rec["actions"].append(p["action_id"])
+        elif r["agent"] == "outcome" and r["event"] == "recovered":
+            rec["recovered"] = True
+        elif r["agent"] == "policy_gate" and r["event"] == "denied":
+            rec["final"] = p["reason"]
+        elif r["agent"] == "executor" and r["event"] in ("escalated", "execution_failed"):
+            rec["final"] = r["event"]
+    ledger.close()
+    return out
+
+
+@app.command()
+def counterfactual(agent_run: str, baseline_run: str, out: str = ""):
+    """Per-checkout agent-vs-baseline outcomes. Only meaningful because outcome
+    draws are paired per (checkout_id, attempt_no): each checkout has a defined
+    result under BOTH policies, so the delta is attributable to the decision."""
+    a, b = _per_checkout(agent_run), _per_checkout(baseline_run)
+    rows, classes = [], {"agent_won": 0, "baseline_won": 0, "both": 0, "neither": 0}
+    delta_paise = 0
+    for cid in sorted(set(a) | set(b)):
+        ra, rb = a.get(cid, {}), b.get(cid, {})
+        ar, br = bool(ra.get("recovered")), bool(rb.get("recovered"))
+        cls = ("both" if ar and br else "agent_won" if ar else
+               "baseline_won" if br else "neither")
+        classes[cls] += 1
+        amt = ra.get("amount_paise") or rb.get("amount_paise") or 0
+        if cls == "agent_won":
+            delta_paise += amt
+        elif cls == "baseline_won":
+            delta_paise -= amt
+        rows.append({
+            "checkout_id": cid, "failure_type": ra.get("failure_type") or rb.get("failure_type"),
+            "amount_inr": round(amt / 100, 2), "class": cls,
+            "agent": {"actions": ra.get("actions", []), "recovered": ar, "final": ra.get("final")},
+            "baseline": {"actions": rb.get("actions", []), "recovered": br, "final": rb.get("final")},
+        })
+    payload = {"agent_run": agent_run, "baseline_run": baseline_run,
+               "classes": classes, "net_delta_inr": round(delta_paise / 100, 2),
+               "paired_draws": True, "checkouts": rows}
+    out = out or str(ROOT / "dashboard" / "public" / "data" / "counterfactual.json")
+    Path(out).parent.mkdir(parents=True, exist_ok=True)
+    Path(out).write_text(json.dumps(payload, indent=1), encoding="utf-8")
+    print(json.dumps({"classes": classes, "net_delta_inr": payload["net_delta_inr"]}, indent=2))
+    print(f"-> {out}")
 
 
 if __name__ == "__main__":
