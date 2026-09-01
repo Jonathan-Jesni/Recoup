@@ -8,3 +8,8 @@ node_modules/
 dashboard/out/
 .DS_Store
 runs/**/ledger.db
+.pytest_cache/
+.env.*
+!.env.example
+runs/**/llm_cache/
+Thumbs.db
