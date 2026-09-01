@@ -1,5 +1,7 @@
 # Recoup — AI Revenue Recovery (Razorpay Buildathon, Track 3)
 
+**The recovery agent that shows you the one rupee it actually recovered — and the model behind every rupee it didn't.**
+
 > **Headline (100-checkout batch, agent vs blind-retry baseline, identical seeded outcome draws):**
 > _Numbers below are from the offline fallback smoke run — will be replaced by the Day 3 LLM batch run and committed before any tuning._
 >
@@ -18,15 +20,28 @@ honest exception list.
 
 ## What is real vs simulated — read this first
 
-1. **Real:** the Executor makes genuine Razorpay test-mode API calls
+1. **Real input:** every checkout in the batch is a real Razorpay test-mode
+   Order (`razorpay_order_id` in [data/events.json](data/events.json)), and a
+   subset of failures are genuine `payment.failed` entities pulled from the API
+   with their error fields verbatim (`source: "observed"`). The failure
+   annotation on the rest is synthetic and labelled `source: "synthetic"`.
+   _(Day 2 deliverable — `python -m recoup.seed_orders`.)_
+2. **Real calls:** the Executor makes genuine Razorpay test-mode API calls
    (Payment Links). Raw request/response logged verbatim in the ledger.
-2. **Observed:** one recovery is closed end-to-end for real — the agent's link
-   paid with a Razorpay test card and observed transitioning to `paid` via the
-   API. Flagged `observed: true` in the ledger. _(Day 3 deliverable.)_
-3. **Simulated:** batch outcomes are drawn under a stated, seeded model
+3. **Observed outcome:** one recovery is closed end-to-end for real — the
+   agent's link paid with a Razorpay test card and observed transitioning to
+   `paid` via the API. Flagged `observed: true`. _(Day 3 deliverable.)_
+4. **Simulated batch:** batch outcomes are drawn under a stated, seeded model
    ([config/recovery_model.json](config/recovery_model.json)) — assumptions
-   published, draws paired across policies so agent-vs-baseline is a fair
-   comparison. No batch number is claimed as observed.
+   published, draws **paired** per checkout across policies so agent-vs-baseline
+   is a fair comparison. No batch number is claimed as observed.
+
+Because draws are paired, every checkout has a defined result under *both*
+policies — so we can name the exact checkouts where the agent's decision was
+the difference (`python -m recoup.cli counterfactual <agent-run> <baseline-run>`).
+Inference spend is tracked per token and reported as
+`inference_cost_per_100_inr_recovered` in every `run.json`, with the price and
+FX assumptions printed alongside it.
 
 Reproduce our number yourself (offline, no keys needed):
 
