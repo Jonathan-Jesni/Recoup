@@ -40,6 +40,9 @@ class CheckoutEvent(BaseModel):
     customer_retry_count: int = 0        # retries the customer made on their own
     failed_at: str                       # ISO timestamp
     customer_segment: Literal["new", "returning"] = "new"
+    source: Literal["synthetic", "observed"] = "synthetic"  # observed = real Razorpay payment.failed
+    razorpay_order_id: Optional[str] = None                # real test-mode order id once seeded
+    razorpay_payment_id: Optional[str] = None              # only on observed events
 
 
 class Diagnosis(BaseModel):
