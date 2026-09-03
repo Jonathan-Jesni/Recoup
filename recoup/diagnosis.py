@@ -31,6 +31,12 @@ Rules you must respect (they are also enforced in code):
 - Consider amount: EMI only makes sense above roughly Rs 3000 (300000 paise).
 - A customer who already retried multiple times on the same method should not be asked to retry it again.
 
+previous_attempts lists recovery actions THIS pipeline already fired on this
+checkout and their outcome. They did not recover it. Weigh that: repeating an
+action that just failed is usually wrong, but not always — if it genuinely
+remains the best option for this root cause, keep it and say why in the
+justification. Do not switch action merely for novelty.
+
 root_cause must ADD information, not repeat the input. failure_type is already
 given to you and was decided deterministically by rule; echoing it back is
 useless. Name the likely underlying mechanism instead — what you believe went
@@ -45,7 +51,8 @@ def _fallbacks() -> dict[str, str]:
         return json.load(f)["fallback_by_failure_type"]
 
 
-def _user_prompt(event: CheckoutEvent, failure_type: str, attempts_so_far: int) -> str:
+def _user_prompt(event: CheckoutEvent, failure_type: str, attempts_so_far: int,
+                 previous_attempts: list[dict] | None = None) -> str:
     return json.dumps({
         "failure_type": failure_type,
         "amount_paise": event.amount_paise,
@@ -58,15 +65,20 @@ def _user_prompt(event: CheckoutEvent, failure_type: str, attempts_so_far: int) 
         "customer_segment": event.customer_segment,
         "failed_at": event.failed_at,
         "recovery_attempts_so_far": attempts_so_far,
+        "previous_attempts": previous_attempts or [],
     })
 
 
 def diagnose(
     event: CheckoutEvent, failure_type: str, attempts_so_far: int, llm: LLMClient,
-    max_retries: int = 2,
+    max_retries: int = 2, previous_attempts: list[dict] | None = None,
 ) -> tuple[Diagnosis, bool]:
-    """Returns (diagnosis, used_fallback)."""
-    user = _user_prompt(event, failure_type, attempts_so_far)
+    """Returns (diagnosis, used_fallback).
+
+    previous_attempts carries what this pipeline already tried on this checkout
+    and how it turned out, so a second diagnosis is informed rather than a
+    re-derivation from identical inputs."""
+    user = _user_prompt(event, failure_type, attempts_so_far, previous_attempts)
     for attempt in range(max_retries + 1):
         try:
             raw = llm.complete_json(SYSTEM, user, attempt=attempt)

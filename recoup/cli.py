@@ -74,10 +74,12 @@ def run(
             continue
 
         attempts, recovered, last_attempt = 0, False, None
+        history: list[dict] = []  # what we already tried on this checkout
         max_loop = 2  # hard structural bound, matches policy.max_attempts
         for _ in range(max_loop):
             if policy == "agent":
-                diag, fallback = diagnose(ev, ftype, attempts, llm)
+                diag, fallback = diagnose(ev, ftype, attempts, llm,
+                                          previous_attempts=history)
                 if fallback:
                     stats["llm_fallbacks"] += 1
                 ledger.log(cid, "diagnosis", "diagnosed",
@@ -121,6 +123,8 @@ def run(
             sim = outcome_mod.simulate(checkout_id=cid, failure_type=ftype,
                                        action_id=diag.action_id, attempt_no=attempts)
             ledger.log(cid, "outcome", "recovered" if sim["recovered"] else "not_recovered", sim)
+            history.append({"attempt_no": attempts, "action_id": diag.action_id,
+                            "outcome": "recovered" if sim["recovered"] else "not_recovered"})
             if sim["recovered"]:
                 recovered = True
                 stats["recovered_paise"] += ev.amount_paise
