@@ -27,6 +27,26 @@ def test_second_attempt_decays():
     assert p2 < p1
 
 
+def test_repeating_failed_action_decays_harder_than_switching():
+    # Attempt 2 with the SAME action that just failed must be modelled as
+    # weaker than attempt 2 with a different action of equal base conversion.
+    repeat = simulate(checkout_id="c", failure_type="card_declined",
+                      action_id="offer_emi", attempt_no=2,
+                      previous_action_id="offer_emi")
+    switch = simulate(checkout_id="c", failure_type="card_declined",
+                      action_id="offer_emi", attempt_no=2,
+                      previous_action_id="retry_alternate_instrument")
+    assert repeat["repeated_action"] and not switch["repeated_action"]
+    assert repeat["p"] < switch["p"]
+    assert repeat["draw"] == switch["draw"]  # pairing survives the change
+
+
+def test_first_attempt_never_counts_as_repeat():
+    r = simulate(checkout_id="c", failure_type="card_declined",
+                 action_id="offer_emi", attempt_no=1, previous_action_id="offer_emi")
+    assert r["repeated_action"] is False and r["decay_applied"] is None
+
+
 def test_unknown_pair_never_recovers():
     r = simulate(checkout_id="c", failure_type="unclassified",
                  action_id="escalate_human", attempt_no=1)

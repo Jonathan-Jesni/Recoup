@@ -120,8 +120,10 @@ def run(
             last_attempt = now
             now += timedelta(minutes=35)  # simulated clock respects cooldown
 
-            sim = outcome_mod.simulate(checkout_id=cid, failure_type=ftype,
-                                       action_id=diag.action_id, attempt_no=attempts)
+            sim = outcome_mod.simulate(
+                checkout_id=cid, failure_type=ftype, action_id=diag.action_id,
+                attempt_no=attempts,
+                previous_action_id=history[-1]["action_id"] if history else None)
             ledger.log(cid, "outcome", "recovered" if sim["recovered"] else "not_recovered", sim)
             history.append({"attempt_no": attempts, "action_id": diag.action_id,
                             "outcome": "recovered" if sim["recovered"] else "not_recovered"})
