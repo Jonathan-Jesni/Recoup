@@ -18,13 +18,13 @@ from recoup.schemas import CheckoutEvent, Diagnosis
 
 load_dotenv()
 
-NUDGE_HINGLISH = ("Aapka order abhi bhi reserved hai! Payment complete karne ke liye "
-                  "yeh link use karein - bas 2 minute lagenge.")
+NUDGE_MESSAGE = ("Your order is still reserved! Complete your payment using this "
+                 "link - it only takes 2 minutes.")
 
 DESCRIPTIONS = {
     "retry_alternate_instrument": "Complete your payment - try UPI or another method",
     "retry_same_cooldown": "Complete your payment - your order is still reserved",
-    "recovery_nudge": NUDGE_HINGLISH,
+    "recovery_nudge": NUDGE_MESSAGE,
     "offer_emi": "Complete your purchase with easy EMI options",
 }
 
