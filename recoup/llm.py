@@ -30,7 +30,7 @@ class LLMClient:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.model = model or os.environ.get(
-            "FIREWORKS_MODEL", "accounts/fireworks/models/llama-v3p3-70b-instruct")
+            "FIREWORKS_MODEL", "accounts/fireworks/models/glm-5p2")
         self._client = None
         self.prompt_tokens = 0
         self.completion_tokens = 0
@@ -38,17 +38,26 @@ class LLMClient:
         self.cache_hits = 0
 
     # -- cost model: assumptions, env-overridable, reported as assumptions ----
+    # Fireworks prices input and output separately and the gap is wide (4x on
+    # gpt-oss-120b), so a single blended rate would misstate the headline
+    # inference_cost_per_100_inr_recovered. Defaults are gpt-oss-120b's
+    # published serverless rates.
     @property
-    def usd_per_m_tokens(self) -> float:
-        return float(os.environ.get("FIREWORKS_USD_PER_M_TOKENS", "0.90"))
+    def usd_per_m_input(self) -> float:
+        return float(os.environ.get("FIREWORKS_USD_PER_M_INPUT", "0.15"))
+
+    @property
+    def usd_per_m_output(self) -> float:
+        return float(os.environ.get("FIREWORKS_USD_PER_M_OUTPUT", "0.60"))
 
     @property
     def usd_inr(self) -> float:
         return float(os.environ.get("USD_INR", "88"))
 
     def cost_inr(self) -> float:
-        total = self.prompt_tokens + self.completion_tokens
-        return round(total / 1_000_000 * self.usd_per_m_tokens * self.usd_inr, 4)
+        usd = (self.prompt_tokens * self.usd_per_m_input
+               + self.completion_tokens * self.usd_per_m_output) / 1_000_000
+        return round(usd * self.usd_inr, 4)
 
     def usage(self) -> dict:
         return {
@@ -58,7 +67,8 @@ class LLMClient:
             "prompt_tokens": self.prompt_tokens,
             "completion_tokens": self.completion_tokens,
             "cost_inr": self.cost_inr(),
-            "assumed_usd_per_m_tokens": self.usd_per_m_tokens,
+            "assumed_usd_per_m_input": self.usd_per_m_input,
+            "assumed_usd_per_m_output": self.usd_per_m_output,
             "assumed_usd_inr": self.usd_inr,
         }
 
@@ -93,7 +103,10 @@ class LLMClient:
                 messages=[{"role": "system", "content": system},
                           {"role": "user", "content": user}],
                 temperature=0.2,
-                max_tokens=600,
+                # Reasoning models spend their budget thinking before emitting the
+                # JSON. 600 truncated them mid-object (or produced empty content),
+                # which surfaced as an indistinguishable llm_fallback.
+                max_tokens=int(os.environ.get("FIREWORKS_MAX_TOKENS", "4000")),
                 response_format={"type": "json_object"},
             )
         except Exception as e:  # network/auth/model errors all become fallback
