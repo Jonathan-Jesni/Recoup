@@ -31,6 +31,12 @@ Rules you must respect (they are also enforced in code):
 - Consider amount: EMI only makes sense above roughly Rs 3000 (300000 paise).
 - A customer who already retried multiple times on the same method should not be asked to retry it again.
 
+root_cause must ADD information, not repeat the input. failure_type is already
+given to you and was decided deterministically by rule; echoing it back is
+useless. Name the likely underlying mechanism instead — what you believe went
+wrong on the issuer, customer or gateway side, and why this checkout's specifics
+point there. Keep it under 20 words.
+
 Respond with ONLY a JSON object: {"root_cause": str, "action_id": str, "justification": str, "confidence": float 0..1}"""
 
 
