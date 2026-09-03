@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -33,23 +34,41 @@ def _client():
                                  os.environ["RAZORPAY_KEY_SECRET"]))
 
 
-def seed_orders(path: Path = EVENTS) -> None:
+def _with_retry(fn, *, max_retries: int = 6, base_delay: float = 2.0):
+    """Retry on Razorpay's test-mode rate limit ('Too many requests') with
+    exponential backoff. Any other error propagates immediately."""
+    import razorpay
+    for attempt in range(max_retries + 1):
+        try:
+            return fn()
+        except razorpay.errors.BadRequestError as e:
+            if "Too many requests" not in str(e) or attempt == max_retries:
+                raise
+            wait = base_delay * (2 ** attempt)
+            print(f"  rate limited, waiting {wait:.0f}s (attempt {attempt + 1}/{max_retries})...")
+            time.sleep(wait)
+
+
+def seed_orders(path: Path = EVENTS, delay_s: float = 0.6) -> None:
+    """delay_s throttles calls to stay under test-mode rate limits; retries
+    with backoff on 429s rather than aborting the whole batch."""
     client = _client()
     events = json.loads(path.read_text(encoding="utf-8"))
     created = 0
     for ev in events:
         if ev.get("razorpay_order_id"):
             continue
-        order = client.order.create({
+        order = _with_retry(lambda: client.order.create({
             "amount": ev["amount_paise"],
             "currency": ev["currency"],
             "receipt": ev["checkout_id"],
             "notes": {"recoup": "seeded-checkout", "checkout_id": ev["checkout_id"]},
-        })
+        }))
         ev["razorpay_order_id"] = order["id"]
         created += 1
         print(f"{ev['checkout_id']} -> {order['id']}")
         path.write_text(json.dumps(events, indent=2), encoding="utf-8")  # save as we go
+        time.sleep(delay_s)
     print(f"created {created} real test-mode orders; wrote back to {path}")
 
 
