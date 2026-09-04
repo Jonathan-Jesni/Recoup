@@ -42,6 +42,7 @@ def run(
     policy: str = typer.Option("agent", help="agent | baseline"),
     events_path: str = "data/events.json",
     limit: int = typer.Option(0, help="0 = full batch"),
+    only_checkout: str = typer.Option("", help="run exactly one checkout_id — use with --no-dry-run so a live run creates ONE link, not 150"),
     dry_run: bool = typer.Option(True, help="--no-dry-run makes real Razorpay calls"),
     force_fail_checkout: str = typer.Option("", help="checkout_id whose execution is forced to fail (the demo failure case)"),
     run_id: str = typer.Option("", help="defaults to <policy>-<date>"),
@@ -56,6 +57,10 @@ def run(
     # and get byte-identical numbers and inference cost.
     llm = LLMClient(ROOT / ".llm_cache")
     events = _load_events(events_path, limit or None)
+    if only_checkout:
+        events = [e for e in events if e.checkout_id == only_checkout]
+        if not events:
+            raise SystemExit(f"checkout_id {only_checkout!r} not found in {events_path}")
 
     stats = dict(at_risk_paise=0, recovered_paise=0, recovered_count=0,
                  attempted=0, llm_fallbacks=0)

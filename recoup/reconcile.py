@@ -30,10 +30,18 @@ def poll_until_paid(plink_id: str, timeout_s: int = 600, interval_s: int = 5) ->
     client = _client()
     deadline = time.time() + timeout_s
     last = None
+    net_errors = 0
     while time.time() < deadline:
-        link = client.payment_link.fetch(plink_id)
-        status = link["status"]
         stamp = time.strftime("%H:%M:%S")
+        try:
+            link = client.payment_link.fetch(plink_id)
+        except Exception as e:  # noqa: BLE001 - DNS/network blips must not end the poll
+            net_errors += 1
+            print(f"  [{stamp}] network error ({type(e).__name__}), retrying "
+                  f"-- {net_errors} so far")
+            time.sleep(interval_s)
+            continue
+        status = link["status"]
         if status != last:
             print(f"  [{stamp}] {plink_id}: {status}"
                   f"{'  <-- OBSERVED RECOVERY' if status == 'paid' else ''}")
