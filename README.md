@@ -82,6 +82,32 @@ python -m recoup.cli run --policy agent --run-id verify
 Expect `recovered_inr: 163655.0`, `calls: 0`, `cache_hits: 166`, and
 `cost_inr: 32.7188` — identical to the committed run, with zero network calls.
 
+We tested this the only way that counts: cloned the repo into an empty directory,
+built a fresh venv, installed from `requirements.txt` and ran it with **no `.env`
+at all**. Every field matched. That test found a real bug — the cost-model
+defaults had drifted from the default model, so a reproducer would have seen
+Rs 4.13 instead of Rs 32.72. Our own `.env` had been masking it. Fixed, and
+[pinned with a test](tests/test_llm_cost.py) that fails if the rates and the
+model ever diverge again.
+
+![Fresh replay vs the committed batch](docs/reproducibility-zero-api-calls.png)
+
+---
+
+## The evidence
+
+Every rung of the ladder above has something you can look at.
+
+| | |
+|---|---|
+| **Rung 1** — 100 real Razorpay Orders, receipts matching our `chk_` ids | ![](docs/rung1-100-real-orders.png) |
+| **Rung 2** — the agent's own diagnosis stored in Razorpay's `notes`, in their dashboard | ![](docs/rung2-link-notes-agent-reasoning.png) |
+| **Rung 3** — `created → paid`, Rs 2,807, terminal and browser in one frame | ![](docs/rung3-observed-recovery-paid.png) |
+| **Failure handling** — the full chain to Razorpay's real 400, Rs 0 claimed | ![](docs/failure-case-real-400.png) |
+
+More in [docs/](docs): the payment-links list, the customer-facing checkout page,
+and the classifier before/after below.
+
 ---
 
 ## What real data broke
@@ -95,6 +121,12 @@ vocabulary we had never seen.
 pay_TXvWGSg2w9DAFa  netbanking  error_source=bank  -> unclassified  <-- FELL THROUGH
 pay_TXvVkgUdnW8UVI  netbanking  error_source=bank  -> unclassified  <-- FELL THROUGH
 ```
+
+Before, and after the fix — same script, same real payloads:
+
+| | |
+|---|---|
+| ![before](docs/classifier-before-bank-unclassified.png) | ![after](docs/classifier-after-all-classified.png) |
 
 That is the classifier working as designed: unknown codes go to the exception
 list rather than being guessed at. We added `bank` rules **from observed payloads
