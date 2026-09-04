@@ -1,13 +1,13 @@
 {
- "agent_run": "smoke-agent",
- "baseline_run": "smoke-baseline",
+ "agent_run": "agent-final",
+ "baseline_run": "baseline-final",
  "classes": {
-  "agent_won": 18,
-  "baseline_won": 0,
-  "both": 19,
-  "neither": 63
+  "agent_won": 16,
+  "baseline_won": 1,
+  "both": 18,
+  "neither": 69
  },
- "net_delta_inr": 99883.0,
+ "net_delta_inr": 13420.0,
  "paired_draws": true,
  "checkouts": [
   {
@@ -17,6 +17,7 @@
    "class": "agent_won",
    "agent": {
     "actions": [
+     "recovery_nudge",
      "recovery_nudge"
     ],
     "recovered": true,
@@ -38,8 +39,10 @@
    "class": "neither",
    "agent": {
     "actions": [
-     "retry_same_cooldown",
-     "retry_same_cooldown"
+     "offer_emi",
+     "retry_alternate_instrument",
+     "offer_emi",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -60,7 +63,8 @@
    "class": "agent_won",
    "agent": {
     "actions": [
-     "retry_alternate_instrument"
+     "offer_emi",
+     "offer_emi"
     ],
     "recovered": true,
     "final": null
@@ -98,7 +102,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "offer_emi",
+     "recovery_nudge",
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -136,7 +142,9 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "offer_emi",
+     "retry_alternate_instrument",
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -158,7 +166,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -180,7 +190,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -202,7 +214,9 @@
    "agent": {
     "actions": [
      "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "retry_same_cooldown",
+     "retry_alternate_instrument"
     ],
     "recovered": true,
     "final": null
@@ -224,10 +238,12 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "escalate_human",
+     "retry_alternate_instrument",
+     "escalate_human"
     ],
     "recovered": false,
-    "final": "escalate_and_stop"
+    "final": "escalated"
    },
    "baseline": {
     "actions": [
@@ -246,7 +262,9 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "recovery_nudge",
+     "retry_alternate_instrument",
+     "recovery_nudge"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -267,6 +285,7 @@
    "class": "agent_won",
    "agent": {
     "actions": [
+     "recovery_nudge",
      "recovery_nudge"
     ],
     "recovered": true,
@@ -289,7 +308,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "offer_emi",
+     "recovery_nudge",
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -310,6 +331,7 @@
    "class": "agent_won",
    "agent": {
     "actions": [
+     "retry_alternate_instrument",
      "retry_alternate_instrument"
     ],
     "recovered": true,
@@ -332,7 +354,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "offer_emi",
+     "recovery_nudge",
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -353,11 +377,13 @@
    "class": "neither",
    "agent": {
     "actions": [
-     "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "escalate_human",
+     "retry_alternate_instrument",
+     "escalate_human"
     ],
     "recovered": false,
-    "final": "escalate_and_stop"
+    "final": "escalated"
    },
    "baseline": {
     "actions": [
@@ -376,7 +402,9 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "recovery_nudge",
+     "retry_alternate_instrument",
+     "recovery_nudge"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -413,8 +441,10 @@
    "class": "neither",
    "agent": {
     "actions": [
-     "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument",
+     "recovery_nudge"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -435,8 +465,10 @@
    "class": "neither",
    "agent": {
     "actions": [
-     "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument",
+     "recovery_nudge"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -458,7 +490,9 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "retry_same_cooldown",
+     "retry_alternate_instrument",
+     "retry_same_cooldown"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -479,6 +513,7 @@
    "class": "neither",
    "agent": {
     "actions": [
+     "retry_alternate_instrument",
      "retry_alternate_instrument"
     ],
     "recovered": false,
@@ -500,7 +535,9 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "offer_emi",
+     "retry_alternate_instrument",
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -522,7 +559,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -543,8 +582,10 @@
    "class": "neither",
    "agent": {
     "actions": [
-     "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument",
+     "recovery_nudge"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -566,7 +607,9 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "retry_same_cooldown",
+     "retry_alternate_instrument",
+     "retry_same_cooldown"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -587,6 +630,7 @@
    "class": "agent_won",
    "agent": {
     "actions": [
+     "recovery_nudge",
      "recovery_nudge"
     ],
     "recovered": true,
@@ -609,7 +653,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -631,7 +677,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -652,6 +700,7 @@
    "class": "agent_won",
    "agent": {
     "actions": [
+     "retry_alternate_instrument",
      "retry_alternate_instrument"
     ],
     "recovered": true,
@@ -674,7 +723,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -696,7 +747,9 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "offer_emi",
+     "retry_alternate_instrument",
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -718,10 +771,12 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "escalate_human",
+     "retry_alternate_instrument",
+     "escalate_human"
     ],
     "recovered": false,
-    "final": "escalate_and_stop"
+    "final": "escalated"
    },
    "baseline": {
     "actions": [
@@ -740,7 +795,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -761,6 +818,7 @@
    "class": "both",
    "agent": {
     "actions": [
+     "retry_same_cooldown",
      "retry_same_cooldown"
     ],
     "recovered": true,
@@ -782,7 +840,9 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "offer_emi",
+     "retry_alternate_instrument",
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -819,6 +879,7 @@
    "class": "both",
    "agent": {
     "actions": [
+     "retry_same_cooldown",
      "retry_same_cooldown"
     ],
     "recovered": true,
@@ -840,10 +901,12 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "escalate_human",
+     "retry_alternate_instrument",
+     "escalate_human"
     ],
     "recovered": false,
-    "final": "escalate_and_stop"
+    "final": "escalated"
    },
    "baseline": {
     "actions": [
@@ -861,6 +924,7 @@
    "class": "neither",
    "agent": {
     "actions": [
+     "retry_alternate_instrument",
      "retry_alternate_instrument"
     ],
     "recovered": false,
@@ -882,7 +946,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -903,6 +969,7 @@
    "class": "neither",
    "agent": {
     "actions": [
+     "retry_alternate_instrument",
      "retry_alternate_instrument"
     ],
     "recovered": false,
@@ -923,6 +990,7 @@
    "class": "agent_won",
    "agent": {
     "actions": [
+     "recovery_nudge",
      "recovery_nudge"
     ],
     "recovered": true,
@@ -945,7 +1013,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -967,7 +1037,9 @@
    "agent": {
     "actions": [
      "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "retry_same_cooldown",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -985,13 +1057,16 @@
    "checkout_id": "chk_8310046",
    "failure_type": "card_declined",
    "amount_inr": 39757.0,
-   "class": "agent_won",
+   "class": "neither",
    "agent": {
     "actions": [
+     "offer_emi",
+     "retry_alternate_instrument",
+     "offer_emi",
      "retry_alternate_instrument"
     ],
-    "recovered": true,
-    "final": null
+    "recovered": false,
+    "final": "escalate_and_stop"
    },
    "baseline": {
     "actions": [
@@ -1010,7 +1085,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1031,7 +1108,8 @@
    "class": "neither",
    "agent": {
     "actions": [
-     "retry_same_cooldown"
+     "recovery_nudge",
+     "recovery_nudge"
     ],
     "recovered": false,
     "final": "below_minimum"
@@ -1052,7 +1130,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1073,6 +1153,7 @@
    "class": "agent_won",
    "agent": {
     "actions": [
+     "retry_alternate_instrument",
      "retry_alternate_instrument"
     ],
     "recovered": true,
@@ -1094,7 +1175,8 @@
    "class": "neither",
    "agent": {
     "actions": [
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "below_minimum"
@@ -1114,8 +1196,10 @@
    "class": "both",
    "agent": {
     "actions": [
-     "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument",
+     "recovery_nudge"
     ],
     "recovered": true,
     "final": null
@@ -1137,7 +1221,9 @@
    "agent": {
     "actions": [
      "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "retry_same_cooldown",
+     "retry_alternate_instrument"
     ],
     "recovered": true,
     "final": null
@@ -1158,6 +1244,7 @@
    "class": "both",
    "agent": {
     "actions": [
+     "retry_same_cooldown",
      "retry_same_cooldown"
     ],
     "recovered": true,
@@ -1179,7 +1266,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1200,7 +1289,9 @@
    "class": "agent_won",
    "agent": {
     "actions": [
+     "offer_emi",
      "recovery_nudge",
+     "offer_emi",
      "recovery_nudge"
     ],
     "recovered": true,
@@ -1222,6 +1313,7 @@
    "class": "both",
    "agent": {
     "actions": [
+     "retry_same_cooldown",
      "retry_same_cooldown"
     ],
     "recovered": true,
@@ -1243,7 +1335,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1281,7 +1375,9 @@
    "agent": {
     "actions": [
      "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "retry_same_cooldown",
+     "retry_alternate_instrument"
     ],
     "recovered": true,
     "final": null
@@ -1303,7 +1399,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "offer_emi",
+     "recovery_nudge",
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1325,7 +1423,9 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1343,14 +1443,16 @@
    "checkout_id": "chk_8310063",
    "failure_type": "silent_abandonment",
    "amount_inr": 594.0,
-   "class": "agent_won",
+   "class": "neither",
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument",
+     "recovery_nudge",
+     "retry_alternate_instrument"
     ],
-    "recovered": true,
-    "final": null
+    "recovered": false,
+    "final": "escalate_and_stop"
    },
    "baseline": {
     "actions": [
@@ -1369,6 +1471,7 @@
    "agent": {
     "actions": [
      "recovery_nudge",
+     "retry_alternate_instrument",
      "recovery_nudge"
     ],
     "recovered": false,
@@ -1391,7 +1494,7 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "retry_same_cooldown"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1413,7 +1516,7 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1477,10 +1580,10 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "escalate_human"
     ],
     "recovered": false,
-    "final": "escalate_and_stop"
+    "final": "escalated"
    },
    "baseline": {
     "actions": [
@@ -1498,7 +1601,7 @@
    "class": "neither",
    "agent": {
     "actions": [
-     "retry_same_cooldown",
+     "retry_alternate_instrument",
      "retry_same_cooldown"
     ],
     "recovered": false,
@@ -1521,7 +1624,7 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument"
     ],
     "recovered": true,
     "final": null
@@ -1543,7 +1646,7 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1586,7 +1689,7 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "recovery_nudge"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1648,7 +1751,7 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1670,10 +1773,10 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "escalate_human"
     ],
     "recovered": false,
-    "final": "escalate_and_stop"
+    "final": "escalated"
    },
    "baseline": {
     "actions": [
@@ -1692,7 +1795,7 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1755,7 +1858,7 @@
    "agent": {
     "actions": [
      "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1776,8 +1879,8 @@
    "class": "neither",
    "agent": {
     "actions": [
-     "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "recovery_nudge"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1799,7 +1902,7 @@
    "agent": {
     "actions": [
      "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1842,7 +1945,7 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1864,7 +1967,7 @@
    "agent": {
     "actions": [
      "retry_alternate_instrument",
-     "retry_alternate_instrument"
+     "retry_same_cooldown"
     ],
     "recovered": true,
     "final": null
@@ -1927,7 +2030,7 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "offer_emi"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1969,7 +2072,7 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -1991,7 +2094,7 @@
    "agent": {
     "actions": [
      "recovery_nudge",
-     "recovery_nudge"
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -2009,22 +2112,22 @@
    "checkout_id": "chk_8310094",
    "failure_type": "insufficient_funds",
    "amount_inr": 2607.0,
-   "class": "both",
+   "class": "neither",
    "agent": {
     "actions": [
-     "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument",
+     "escalate_human"
     ],
-    "recovered": true,
-    "final": null
+    "recovered": false,
+    "final": "escalated"
    },
    "baseline": {
     "actions": [
      "retry_same_cooldown",
      "retry_same_cooldown"
     ],
-    "recovered": true,
-    "final": null
+    "recovered": false,
+    "final": "escalate_and_stop"
    }
   },
   {
@@ -2035,7 +2138,7 @@
    "agent": {
     "actions": [
      "retry_same_cooldown",
-     "retry_same_cooldown"
+     "retry_alternate_instrument"
     ],
     "recovered": false,
     "final": "escalate_and_stop"
@@ -2093,6 +2196,47 @@
    "checkout_id": "chk_8310098",
    "failure_type": "auth_timeout",
    "amount_inr": 46112.0,
+   "class": "baseline_won",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "offer_emi"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "chk_8310099",
+   "failure_type": "auth_timeout",
+   "amount_inr": 759.0,
+   "class": "both",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument"
+    ],
+    "recovered": true,
+    "final": null
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown"
+    ],
+    "recovered": true,
+    "final": null
+   }
+  },
+  {
+   "checkout_id": "obs_pay_TXvOhqxDyvhD6g",
+   "failure_type": "gateway_drop",
+   "amount_inr": 234.0,
    "class": "both",
    "agent": {
     "actions": [
@@ -2110,23 +2254,69 @@
    }
   },
   {
-   "checkout_id": "chk_8310099",
-   "failure_type": "auth_timeout",
-   "amount_inr": 759.0,
-   "class": "both",
+   "checkout_id": "obs_pay_TXvVkgUdnW8UVI",
+   "failure_type": "card_declined",
+   "amount_inr": 234.0,
+   "class": "neither",
    "agent": {
     "actions": [
+     "retry_alternate_instrument",
      "retry_same_cooldown"
     ],
-    "recovered": true,
-    "final": null
+    "recovered": false,
+    "final": "escalate_and_stop"
    },
    "baseline": {
     "actions": [
+     "retry_same_cooldown",
      "retry_same_cooldown"
     ],
-    "recovered": true,
-    "final": null
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "obs_pay_TXvWGSg2w9DAFa",
+   "failure_type": "card_declined",
+   "amount_inr": 234.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_alternate_instrument",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   }
+  },
+  {
+   "checkout_id": "obs_pay_TXvWtgm1fm0osE",
+   "failure_type": "gateway_drop",
+   "amount_inr": 234.0,
+   "class": "neither",
+   "agent": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_alternate_instrument"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
+   },
+   "baseline": {
+    "actions": [
+     "retry_same_cooldown",
+     "retry_same_cooldown"
+    ],
+    "recovered": false,
+    "final": "escalate_and_stop"
    }
   }
  ]
