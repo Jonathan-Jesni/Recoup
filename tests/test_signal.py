@@ -35,6 +35,32 @@ def test_unknown_is_unclassified_never_guessed():
     assert classify(ev(error_source="unknown", error_reason="unknown_error")) == "unclassified"
 
 
+def test_real_razorpay_vocabulary():
+    """Payloads copied verbatim from live Razorpay test-mode payment.failed
+    entities. Our rules were authored against error_source='issuer'; Razorpay
+    emits 'bank', and both netbanking declines below originally fell through to
+    'unclassified'. Pinned here so the regression cannot come back."""
+    # pay_TXvWGSg2w9DAFa / pay_TXvVkgUdnW8UVI -- netbanking, bank-sourced
+    assert classify(ev(method="netbanking", error_source="bank",
+                       error_reason="payment_failed",
+                       error_code="BAD_REQUEST_ERROR")) == "card_declined"
+    # pay_TXvOhqxDyvhD6g / pay_TXvWtgm1fm0osE -- card, gateway-sourced
+    assert classify(ev(method="card", error_source="gateway",
+                       error_reason="payment_failed",
+                       error_code="BAD_REQUEST_ERROR")) == "gateway_drop"
+    # bank + insufficient funds must beat the generic bank decline rule
+    assert classify(ev(error_source="bank",
+                       error_reason="insufficient_funds")) == "insufficient_funds"
+
+
+def test_undocumented_razorpay_sources_stay_unclassified():
+    """Razorpay documents 'business' and 'internal' as error_source values. We
+    have never received either, so no rule guesses at them -- they must land in
+    the exception list rather than be silently mapped."""
+    assert classify(ev(error_source="business", error_reason="payment_failed")) == "unclassified"
+    assert classify(ev(error_source="internal", error_reason="payment_failed")) == "unclassified"
+
+
 def test_whole_batch_classifies_without_error():
     counts: dict[str, int] = {}
     for e in generate(100):

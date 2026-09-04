@@ -1,5 +1,6 @@
 {
   "description": "Deterministic classification rules. Signal agent matches rules top-down; first match wins. No LLM here by design: error codes are a lookup problem, not a reasoning problem.",
+  "real_vocabulary_note": "Rules 2-5 were authored against SYNTHETIC error codes using error_source='issuer'. Razorpay's live API emits 'bank' for the same concept: when we first fed real test-mode failures through Signal, both netbanking declines fell through to 'unclassified' (see the observed events in data/events.json). The 'bank' rules below were added from OBSERVED payloads only. Razorpay also documents 'business' and 'internal' as error_source values; we have not received either, so no rule guesses at them and they will land in 'unclassified' by design. NAMING LIMITATION: 'card_declined' is card-centric, but a bank-sourced netbanking decline is the same event - the customer's bank refused the instrument. The type name is kept for continuity with config/recovery_model.json rather than renamed the day before numbers were locked.",
   "types": [
     "card_declined",
     "auth_timeout",
@@ -12,6 +13,8 @@
     { "match": { "error_source": "issuer", "error_reason": "insufficient_funds" }, "type": "insufficient_funds" },
     { "match": { "error_source": "issuer", "error_reason": "wallet_insufficient_balance" }, "type": "insufficient_funds" },
     { "match": { "error_source": "issuer" }, "type": "card_declined" },
+    { "match": { "error_source": "bank", "error_reason": "insufficient_funds" }, "type": "insufficient_funds" },
+    { "match": { "error_source": "bank" }, "type": "card_declined" },
     { "match": { "error_source": "customer", "error_reason": "authentication_timeout" }, "type": "auth_timeout" },
     { "match": { "error_source": "customer", "error_reason": "otp_expired" }, "type": "auth_timeout" },
     { "match": { "error_source": "customer", "error_reason": "payment_cancelled" }, "type": "auth_timeout" },
