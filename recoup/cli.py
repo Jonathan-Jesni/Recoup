@@ -50,7 +50,11 @@ def run(
     run_id = run_id or f"{policy}-{datetime.now():%Y%m%d}"
     run_dir = ROOT / "runs" / run_id
     ledger = Ledger(run_dir / "ledger.db", run_id)
-    llm = LLMClient(run_dir / "llm_cache")
+    # Cache lives OUTSIDE the run dir and is committed to the repo. The key is
+    # sha256(model|system|user|attempt) — run-independent by construction — so a
+    # judge can replay every diagnosis in this repo offline, with no API key,
+    # and get byte-identical numbers and inference cost.
+    llm = LLMClient(ROOT / ".llm_cache")
     events = _load_events(events_path, limit or None)
 
     stats = dict(at_risk_paise=0, recovered_paise=0, recovered_count=0,
