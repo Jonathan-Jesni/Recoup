@@ -17,6 +17,8 @@ const CLASS_META: Record<CfClass, { label: string; tone: string; dot: string }> 
 
 export function CounterfactualPanel({ cf }: { cf: Cf }) {
   const [filter, setFilter] = useState<CfClass>("agent_won");
+  const [showAll, setShowAll] = useState(false);
+  const PREVIEW = 20;
   const rows = cf.checkouts.filter((c) => c.class === filter);
   const total = cf.checkouts.length;
 
@@ -41,7 +43,7 @@ export function CounterfactualPanel({ cf }: { cf: Cf }) {
           return (
             <button
               key={k}
-              onClick={() => setFilter(k)}
+              onClick={() => { setFilter(k); setShowAll(false); }}
               className={`group bg-[var(--panel)] p-4 text-left transition-colors ${
                 active ? "bg-[var(--panel2)]" : "hover:bg-[var(--panel2)]"
               }`}
@@ -75,7 +77,7 @@ export function CounterfactualPanel({ cf }: { cf: Cf }) {
         </p>
       </div>
 
-      <div className="max-h-[26rem] overflow-y-auto">
+      <div>
         {rows.length === 0 ? (
           <p className="p-6 text-sm text-[var(--muted)]">No checkouts in this class.</p>
         ) : (
@@ -93,11 +95,20 @@ export function CounterfactualPanel({ cf }: { cf: Cf }) {
               {rows
                 .slice()
                 .sort((x, y) => y.amount_inr - x.amount_inr)
+                .slice(0, showAll ? undefined : PREVIEW)
                 .map((c) => (
                   <CfRow key={c.checkout_id} c={c} />
                 ))}
             </tbody>
           </table>
+        )}
+        {rows.length > PREVIEW && (
+          <button
+            onClick={() => setShowAll((v) => !v)}
+            className="w-full border-t border-[var(--line)] bg-[var(--panel2)] px-5 py-3 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
+          >
+            {showAll ? `Show first ${PREVIEW}` : `Show all ${rows.length}`}
+          </button>
         )}
       </div>
     </Panel>

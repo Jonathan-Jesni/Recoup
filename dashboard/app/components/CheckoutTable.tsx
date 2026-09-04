@@ -25,6 +25,8 @@ export function CheckoutTable({ trails }: { trails: CheckoutTrail[] }) {
   const [q, setQ] = useState("");
   const [open, setOpen] = useState<string | null>(null);
   const [onlyObserved, setOnlyObserved] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const PREVIEW = 20;
 
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -67,7 +69,7 @@ export function CheckoutTable({ trails }: { trails: CheckoutTrail[] }) {
         </div>
       }
     >
-      <div className="max-h-[34rem] overflow-y-auto">
+      <div>
         <table className="w-full text-sm">
           <thead className="sticky top-0 z-10 bg-[var(--panel)] text-left text-[11px] uppercase tracking-wider text-[var(--muted)]">
             <tr className="border-b border-[var(--line)]">
@@ -79,7 +81,7 @@ export function CheckoutTable({ trails }: { trails: CheckoutTrail[] }) {
             </tr>
           </thead>
           <tbody>
-            {rows.map((t) => {
+            {(showAll ? rows : rows.slice(0, PREVIEW)).map((t) => {
               const isOpen = open === t.checkout_id;
               return (
                 <Fragment key={t.checkout_id}>
@@ -135,6 +137,16 @@ export function CheckoutTable({ trails }: { trails: CheckoutTrail[] }) {
         </table>
         {rows.length === 0 && (
           <p className="p-6 text-sm text-[var(--muted)]">No checkouts match.</p>
+        )}
+        {rows.length > PREVIEW && (
+          <button
+            onClick={() => setShowAll((v) => !v)}
+            className="w-full border-t border-[var(--line)] bg-[var(--panel2)] px-5 py-3 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
+          >
+            {showAll
+              ? `Show first ${PREVIEW}`
+              : `Show all ${rows.length} checkouts`}
+          </button>
         )}
       </div>
     </Panel>

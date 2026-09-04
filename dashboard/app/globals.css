@@ -38,3 +38,18 @@ body {
 ::-webkit-scrollbar-track { background: var(--panel); }
 ::-webkit-scrollbar-thumb { background: #262b36; border-radius: 6px; }
 ::-webkit-scrollbar-thumb:hover { background: #333949; }
+
+/* Replay: each checkout's five pipeline segments fill in sequence, so the bar
+   sweeps Signal -> Diagnosis -> Gate -> Executor -> Outcome instead of
+   flashing all five at once. Re-triggered per checkout by remounting. */
+@keyframes segfill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Money landing during replay. */
+@keyframes cashflash {
+  0%   { color: var(--color-emerald-400, #34d399); text-shadow: none; }
+  25%  { color: #6ee7b7; text-shadow: 0 0 18px rgba(52, 211, 153, 0.55); }
+  100% { color: var(--color-emerald-400, #34d399); text-shadow: none; }
+}

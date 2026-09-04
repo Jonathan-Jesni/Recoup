@@ -21,7 +21,18 @@ export function FailureCase({ run }: { run: RunExport }) {
   return (
     <Panel
       title="When execution fails"
-      subtitle="One checkout was deliberately forced to fail. Razorpay rejected the call for real — this is their error text, verbatim from the ledger."
+      subtitle={
+        <>
+          One checkout was deliberately forced to fail. Razorpay rejected the call for real —
+          this is their error text, verbatim from the ledger.{" "}
+          <strong className="text-[var(--foreground)]">
+            Run separately as <code className="text-xs">failure-case</code>; it is not part of
+            the batch numbers above.
+          </strong>{" "}
+          The same checkout appears in the batch as a normal recovery — that is the same
+          checkout under two different runs, not a contradiction.
+        </>
+      }
       right={<Provenance kind="real" />}
     >
       <div className="grid gap-px bg-[var(--line)] lg:grid-cols-[1fr_auto]">

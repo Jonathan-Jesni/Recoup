@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AuditRow, CheckoutTrail, fmtINR } from "@/lib/data";
+import { CheckoutTrail, fmtINR } from "@/lib/data";
 import { Panel, Provenance } from "./ui";
 
 /**
@@ -26,6 +26,34 @@ const BIN_META: Record<Bin, { label: string; color: string; ring: string }> = {
 };
 
 const STAGES = ["signal", "diagnosis", "policy_gate", "executor", "outcome"] as const;
+const TICK_MS = 190; // per checkout at 1x; 104 checkouts ~= 20s
+
+/** Ease a number toward its target so the money counter climbs instead of jumping. */
+function useTween(target: number, ms = 150) {
+  const [v, setV] = useState(target);
+  const from = useRef(target);
+  const raf = useRef<number | null>(null);
+  useEffect(() => {
+    const start = performance.now();
+    const a = from.current;
+    const b = target;
+    if (a === b) return;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / ms);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setV(a + (b - a) * eased);
+      if (t < 1) raf.current = requestAnimationFrame(step);
+      else from.current = b;
+    };
+    raf.current = requestAnimationFrame(step);
+    return () => {
+      if (raf.current) cancelAnimationFrame(raf.current);
+      from.current = v;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [target, ms]);
+  return v;
+}
 
 function binOf(t: CheckoutTrail): Bin {
   if (t.recovered) return "recovered";
@@ -53,7 +81,16 @@ export function Replay({
   const [i, setI] = useState(0); // how many checkouts have been processed
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
+  const [flash, setFlash] = useState(0); // bumped when money lands
   const timer = useRef<number | null>(null);
+
+  // ?replay=1 autoplays on load, so the video opens on motion rather than
+  // on a cursor hunting for a button.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("replay") === "1") {
+      setPlaying(true);
+    }
+  }, []);
 
   const done = i >= ordered.length;
 
@@ -63,13 +100,14 @@ export function Replay({
         setPlaying(false);
         return prev;
       }
+      if (ordered[prev]?.recovered) setFlash((f) => f + 1);
       return prev + 1;
     });
-  }, [ordered.length]);
+  }, [ordered]);
 
   useEffect(() => {
     if (!playing) return;
-    timer.current = window.setInterval(tick, 190 / speed);
+    timer.current = window.setInterval(tick, TICK_MS / speed);
     return () => {
       if (timer.current) window.clearInterval(timer.current);
     };
@@ -95,7 +133,8 @@ export function Replay({
   );
 
   const current = ordered[Math.min(i, ordered.length - 1)];
-  const currentStage = done ? null : stageOf(current);
+  const shownInr = useTween(recoveredInr, Math.max(120, TICK_MS / speed));
+  const segMs = TICK_MS / speed / STAGES.length; // one pipeline stage per slice of a tick
 
   const reset = () => {
     setPlaying(false);
@@ -159,8 +198,12 @@ export function Replay({
           <div className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted)]">
             Recovered so far
           </div>
-          <div className="tnum mt-1 text-4xl font-semibold text-emerald-400 tabular-nums">
-            {fmtINR(recoveredInr)}
+          <div
+            key={flash}
+            className="tnum mt-1 text-4xl font-semibold text-emerald-400 tabular-nums"
+            style={flash ? { animation: "cashflash 420ms ease-out" } : undefined}
+          >
+            {fmtINR(shownInr)}
           </div>
           <div className="tnum mt-1 text-xs text-[var(--muted)]">
             {recoveredN} checkouts · {linksN} links created · of {fmtINR(atRisk)} at risk
@@ -182,19 +225,20 @@ export function Replay({
                     {fmtINR(current?.amount_inr ?? 0)}
                   </span>
                 </div>
-                <div className="mt-3 flex items-center gap-1">
-                  {STAGES.map((s, idx) => {
-                    const reached = currentStage != null && idx <= currentStage;
-                    return (
-                      <div key={s} className="flex flex-1 items-center gap-1">
-                        <div
-                          className={`h-1.5 flex-1 rounded transition-colors ${
-                            reached ? "bg-sky-400" : "bg-[var(--line)]"
-                          }`}
-                        />
-                      </div>
-                    );
-                  })}
+                <div key={current?.checkout_id} className="mt-3 flex items-center gap-1">
+                  {STAGES.map((s, idx) => (
+                    <div
+                      key={s}
+                      className="h-1.5 flex-1 overflow-hidden rounded bg-[var(--line)]"
+                    >
+                      <div
+                        className="h-full w-full origin-left bg-sky-400"
+                        style={{
+                          animation: `segfill ${segMs}ms ease-out ${idx * segMs}ms both`,
+                        }}
+                      />
+                    </div>
+                  ))}
                 </div>
                 <div className="mt-1.5 flex justify-between font-mono text-[9px] uppercase tracking-wider text-[var(--muted)]">
                   {STAGES.map((s) => (
@@ -236,13 +280,4 @@ export function Replay({
       </div>
     </Panel>
   );
-}
-
-/** Which pipeline stage the current checkout reached, for the little bar. */
-function stageOf(t?: CheckoutTrail): number {
-  if (!t) return 0;
-  const agents = new Set(t.rows.map((r: AuditRow) => r.agent));
-  let n = 0;
-  for (const s of STAGES) if (agents.has(s)) n = STAGES.indexOf(s);
-  return n;
 }
