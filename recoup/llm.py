@@ -38,17 +38,21 @@ class LLMClient:
         self.cache_hits = 0
 
     # -- cost model: assumptions, env-overridable, reported as assumptions ----
-    # Fireworks prices input and output separately and the gap is wide (4x on
-    # gpt-oss-120b), so a single blended rate would misstate the headline
-    # inference_cost_per_100_inr_recovered. Defaults are gpt-oss-120b's
-    # published serverless rates.
+    # Fireworks prices input and output separately and the gap is wide, so a
+    # single blended rate would misstate the headline
+    # inference_cost_per_100_inr_recovered.
+    #
+    # These defaults MUST track the default model above (glm-5p2: $1.40/$4.40
+    # per 1M). A fresh clone has no .env, so these are the rates a judge
+    # reproducing our numbers will actually get — if they drift from the model,
+    # the reported cost is silently wrong for everyone but us.
     @property
     def usd_per_m_input(self) -> float:
-        return float(os.environ.get("FIREWORKS_USD_PER_M_INPUT", "0.15"))
+        return float(os.environ.get("FIREWORKS_USD_PER_M_INPUT", "1.40"))
 
     @property
     def usd_per_m_output(self) -> float:
-        return float(os.environ.get("FIREWORKS_USD_PER_M_OUTPUT", "0.60"))
+        return float(os.environ.get("FIREWORKS_USD_PER_M_OUTPUT", "4.40"))
 
     @property
     def usd_inr(self) -> float:
