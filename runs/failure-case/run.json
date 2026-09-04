@@ -1,0 +1,32 @@
+{
+  "run_id": "failure-case",
+  "policy": "agent",
+  "dry_run": false,
+  "n_events": 1,
+  "at_risk_inr": 1135.0,
+  "recovered_inr": 0.0,
+  "recovery_rate_count": 0.0,
+  "recovery_rate_value": 0.0,
+  "recovered_count": 0,
+  "links_created": 0,
+  "llm_fallbacks": 0,
+  "exception_count": 1,
+  "exceptions": {
+    "execution_failed": [
+      "chk_8310050"
+    ]
+  },
+  "simulated_outcomes": true,
+  "llm": {
+    "model": "accounts/fireworks/models/glm-5p2",
+    "calls": 0,
+    "cache_hits": 1,
+    "prompt_tokens": 541,
+    "completion_tokens": 171,
+    "cost_inr": 0.1329,
+    "assumed_usd_per_m_input": 1.4,
+    "assumed_usd_per_m_output": 4.4,
+    "assumed_usd_inr": 88.0
+  },
+  "inference_cost_per_100_inr_recovered": null
+}
