@@ -249,5 +249,53 @@ def counterfactual(agent_run: str, baseline_run: str, out: str = ""):
     print(f"-> {out}")
 
 
+@app.command()
+def reconcile(
+    plink_id: str = typer.Argument(..., help="plink_... created by a --no-dry-run run"),
+    run_id: str = typer.Option(..., help="run whose ledger records the observed recovery"),
+    checkout_id: str = typer.Option("", help="defaults to the checkout named in the link's notes"),
+    timeout_s: int = typer.Option(600),
+    interval_s: int = typer.Option(5),
+):
+    """Watch a real payment link until Razorpay reports it paid, then write the
+    OBSERVED recovery into the ledger and run.json.
+
+    This is the only non-simulated recovery in the project: every batch number
+    is drawn from config/recovery_model.json, but this one was created by the
+    agent, paid with a real test card, and confirmed by Razorpay's API.
+    """
+    from recoup.reconcile import poll_until_paid
+
+    run_dir = ROOT / "runs" / run_id
+    if not (run_dir / "run.json").exists():
+        raise SystemExit(f"no run.json in {run_dir} — check --run-id")
+
+    print(f"polling {plink_id} (up to {timeout_s}s)...")
+    result = poll_until_paid(plink_id, timeout_s=timeout_s, interval_s=interval_s)
+
+    cid = checkout_id or (result.get("notes") or {}).get("recoup_checkout_id") or "unknown"
+    ledger = Ledger(run_dir / "ledger.db", run_id)
+    ledger.log(cid, "reconcile",
+               "observed_recovered" if result["observed"] else "observation_timeout",
+               {**result, "simulated": False})
+    ledger.close()
+
+    summary = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
+    summary["observed_recovery"] = {
+        "observed": result["observed"],
+        "checkout_id": cid,
+        "plink_id": plink_id,
+        "amount_inr": round((result.get("amount_paise") or 0) / 100, 2),
+        "amount_paid_inr": round((result.get("amount_paid_paise") or 0) / 100, 2),
+        "paid_at": result.get("paid_at"),
+        "reference_id": result.get("reference_id"),
+        "note": ("Real Razorpay test-mode payment link created by the agent and "
+                 "paid with a test card; transition to 'paid' confirmed via "
+                 "GET /v1/payment_links/{id}. NOT simulated."),
+    }
+    (run_dir / "run.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    print(json.dumps(summary["observed_recovery"], indent=2))
+
+
 if __name__ == "__main__":
     app()
