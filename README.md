@@ -225,7 +225,7 @@ python -m recoup.cli run --policy agent            # offline, uses committed cac
 python -m recoup.cli run --policy baseline
 python -m recoup.cli compare agent-final baseline-final
 python -m recoup.cli counterfactual agent-final baseline-final
-pytest tests/                                       # 20 tests
+pytest tests/                                       # 24 tests
 ```
 
 With keys (`.env` from `.env.example`):
