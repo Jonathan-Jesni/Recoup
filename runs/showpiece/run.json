@@ -1,0 +1,38 @@
+{
+  "run_id": "showpiece",
+  "policy": "agent",
+  "dry_run": false,
+  "n_events": 1,
+  "at_risk_inr": 2807.0,
+  "recovered_inr": 2807.0,
+  "recovery_rate_count": 1.0,
+  "recovery_rate_value": 1.0,
+  "recovered_count": 1,
+  "links_created": 1,
+  "llm_fallbacks": 0,
+  "exception_count": 0,
+  "exceptions": {},
+  "simulated_outcomes": true,
+  "llm": {
+    "model": "accounts/fireworks/models/glm-5p2",
+    "calls": 0,
+    "cache_hits": 1,
+    "prompt_tokens": 540,
+    "completion_tokens": 178,
+    "cost_inr": 0.1354,
+    "assumed_usd_per_m_input": 1.4,
+    "assumed_usd_per_m_output": 4.4,
+    "assumed_usd_inr": 88.0
+  },
+  "inference_cost_per_100_inr_recovered": 0.0048,
+  "observed_recovery": {
+    "observed": true,
+    "checkout_id": "chk_8310075",
+    "plink_id": "plink_TXxER0vEHQJuzj",
+    "amount_inr": 2807.0,
+    "amount_paid_inr": 2807.0,
+    "paid_at": 1788524295,
+    "reference_id": "chk_8310075-1788523727",
+    "note": "Real Razorpay test-mode payment link created by the agent and paid with a test card; transition to 'paid' confirmed via GET /v1/payment_links/{id}. NOT simulated."
+  }
+}
