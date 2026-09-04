@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* Dark by default — this is an operations console, and it is what the demo
+   is recorded on. Light mode is deliberately not supported. */
+:root {
+  --background: #08090c;
+  --foreground: #e6e8ee;
+  --panel: #0e1015;
+  --panel-2: #12151c;
+  --line: #1e222c;
+  --muted: #8b93a7;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-panel: var(--panel);
+  --color-panel2: var(--panel-2);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html { color-scheme: dark; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* tabular figures everywhere numbers matter */
+.tnum { font-variant-numeric: tabular-nums; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--panel); }
+::-webkit-scrollbar-thumb { background: #262b36; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #333949; }
