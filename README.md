@@ -24,6 +24,10 @@
 >
 > Total inference cost for the batch: **Rs 32.72** — Rs 0.02 per Rs 100 recovered.
 
+**▶ Live dashboard: [recoup-agent.vercel.app](https://recoup-agent.vercel.app)** — batch replay,
+per-checkout audit trails, the counterfactual, and the exception list. Every number on it is
+labelled REAL, SIMULATED or OBSERVED.
+
 Recoup ingests a batch of failed and abandoned Razorpay checkouts, classifies why
 each one died, diagnoses a root cause, picks one bounded recovery action from a
 fixed menu, executes it against Razorpay test mode, and reports how much money it
@@ -199,6 +203,17 @@ python -m recoup.cli run --policy agent --only-checkout chk_XXXX --no-dry-run
 python -m recoup.cli reconcile plink_XXXX --run-id <run>
 ```
 
-Dashboard: `cd dashboard && npm run dev` — reads the exported run JSONs,
-renders headline comparison, per-checkout audit trails, exceptions, and the
-batch replay.
+## Dashboard
+
+Live at **[recoup-agent.vercel.app](https://recoup-agent.vercel.app)**, or run it locally:
+
+```bash
+cd dashboard && npm install && npm run dev
+```
+
+Static Next.js reading the exported run JSONs — no API, no keys. It renders the headline
+comparison, a batch replay that walks all 104 checkouts through the pipeline in ledger order,
+the counterfactual, every checkout's per-hop audit trail with verbatim API payloads, the forced
+failure case, and the exception list.
+
+The audit trail shown is the ledger table itself. Nothing is reconstructed after the fact.
