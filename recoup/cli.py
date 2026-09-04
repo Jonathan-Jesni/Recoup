@@ -50,7 +50,11 @@ def run(
     assert policy in ("agent", "baseline")
     run_id = run_id or f"{policy}-{datetime.now():%Y%m%d}"
     run_dir = ROOT / "runs" / run_id
-    ledger = Ledger(run_dir / "ledger.db", run_id)
+    # reset=True: this is the writer. A re-run — or an interrupted run followed
+    # by a re-run — must REPLACE its rows, not append a second set under the
+    # same run_id. run.json is computed in memory and stays correct either way,
+    # so appended duplicates are silent and only surface in the audit export.
+    ledger = Ledger(run_dir / "ledger.db", run_id, reset=True)
     # Cache lives OUTSIDE the run dir and is committed to the repo. The key is
     # sha256(model|system|user|attempt) — run-independent by construction — so a
     # judge can replay every diagnosis in this repo offline, with no API key,
@@ -175,7 +179,7 @@ def export(run_id: str, out: str = ""):
     """Export a run's summary + full audit trail for the dashboard."""
     run_dir = ROOT / "runs" / run_id
     summary = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
-    ledger = Ledger(run_dir / "ledger.db", run_id)
+    ledger = Ledger(run_dir / "ledger.db", run_id, reset=False)  # reader
     payload = {"summary": summary, "audit": ledger.rows()}
     ledger.close()
     out = out or str(ROOT / "dashboard" / "public" / "data" / f"run-{summary['policy']}.json")
@@ -197,7 +201,7 @@ def compare(agent_run: str, baseline_run: str):
 
 def _per_checkout(run_id: str) -> dict[str, dict]:
     """Collapse a run's audit log into one record per checkout."""
-    ledger = Ledger(ROOT / "runs" / run_id / "ledger.db", run_id)
+    ledger = Ledger(ROOT / "runs" / run_id / "ledger.db", run_id, reset=False)  # reader
     out: dict[str, dict] = {}
     for r in ledger.rows():
         rec = out.setdefault(r["checkout_id"], {
@@ -279,7 +283,7 @@ def reconcile(
     result = poll_until_paid(plink_id, timeout_s=timeout_s, interval_s=interval_s)
 
     cid = checkout_id or (result.get("notes") or {}).get("recoup_checkout_id") or "unknown"
-    ledger = Ledger(run_dir / "ledger.db", run_id)
+    ledger = Ledger(run_dir / "ledger.db", run_id, reset=False)  # annotates, must not wipe
     ledger.log(cid, "reconcile",
                "observed_recovered" if result["observed"] else "observation_timeout",
                {**result, "simulated": False})

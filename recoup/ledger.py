@@ -25,11 +25,24 @@ CREATE INDEX IF NOT EXISTS idx_audit_checkout ON audit_log (run_id, checkout_id,
 
 
 class Ledger:
-    def __init__(self, db_path: str | Path, run_id: str):
+    def __init__(self, db_path: str | Path, run_id: str, *, reset: bool = False):
+        """reset=True clears any existing rows for this run_id.
+
+        Writers must pass reset=True: a re-run (or an interrupted run followed
+        by a re-run) would otherwise append a second set of rows under the same
+        run_id, and rows() — which filters on run_id alone — would return both.
+        The summary in run.json is computed in memory and stays correct, so the
+        corruption is silent and only shows up in the exported audit trail.
+        Readers (export, reconcile) must pass reset=False or they erase the run
+        they are about to read.
+        """
         self.run_id = run_id
         Path(db_path).parent.mkdir(parents=True, exist_ok=True)
         self.conn = sqlite3.connect(str(db_path))
         self.conn.executescript(SCHEMA)
+        if reset:
+            self.conn.execute("DELETE FROM audit_log WHERE run_id=?", (run_id,))
+            self.conn.commit()
 
     def log(self, checkout_id: str, agent: str, event: str, payload: dict) -> None:
         self.conn.execute(

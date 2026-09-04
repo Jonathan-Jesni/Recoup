@@ -51,3 +51,29 @@ def test_unknown_pair_never_recovers():
     r = simulate(checkout_id="c", failure_type="unclassified",
                  action_id="escalate_human", attempt_no=1)
     assert r["p"] == 0.0 and not r["recovered"]
+
+
+def test_ledger_reset_replaces_rows_instead_of_appending(tmp_path):
+    """A re-run under the same run_id must not leave two sets of rows.
+
+    run.json is computed in memory so it stays correct, which made this silent:
+    the corruption only appeared in the exported audit trail, where every hop
+    was rendered twice.
+    """
+    from recoup.ledger import Ledger
+
+    db = tmp_path / "ledger.db"
+    first = Ledger(db, "r1", reset=True)
+    first.log("chk_1", "signal", "classified", {"failure_type": "card_declined"})
+    first.close()
+
+    second = Ledger(db, "r1", reset=True)
+    second.log("chk_1", "signal", "classified", {"failure_type": "card_declined"})
+    rows = second.rows()
+    second.close()
+    assert len(rows) == 1, "writer must replace prior rows for this run_id"
+
+    # a reader must NOT wipe the run it is about to read
+    reader = Ledger(db, "r1", reset=False)
+    assert len(reader.rows()) == 1
+    reader.close()
