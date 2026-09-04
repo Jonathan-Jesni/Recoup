@@ -1,0 +1,95 @@
+{
+ "summary": {
+  "run_id": "failure-case",
+  "policy": "agent",
+  "dry_run": false,
+  "n_events": 1,
+  "at_risk_inr": 1135.0,
+  "recovered_inr": 0.0,
+  "recovery_rate_count": 0.0,
+  "recovery_rate_value": 0.0,
+  "recovered_count": 0,
+  "links_created": 0,
+  "llm_fallbacks": 0,
+  "exception_count": 1,
+  "exceptions": {
+   "execution_failed": [
+    "chk_8310050"
+   ]
+  },
+  "simulated_outcomes": true,
+  "llm": {
+   "model": "accounts/fireworks/models/glm-5p2",
+   "calls": 0,
+   "cache_hits": 1,
+   "prompt_tokens": 541,
+   "completion_tokens": 171,
+   "cost_inr": 0.1329,
+   "assumed_usd_per_m_input": 1.4,
+   "assumed_usd_per_m_output": 4.4,
+   "assumed_usd_inr": 88.0
+  },
+  "inference_cost_per_100_inr_recovered": null
+ },
+ "audit": [
+  {
+   "ts": 1788524511.2807763,
+   "checkout_id": "chk_8310050",
+   "agent": "signal",
+   "event": "classified",
+   "payload": {
+    "failure_type": "card_declined",
+    "event": {
+     "checkout_id": "chk_8310050",
+     "order_id": "order_recoup_0050",
+     "amount_paise": 113500,
+     "currency": "INR",
+     "method": "card",
+     "payment_attempted": true,
+     "error_source": "issuer",
+     "error_code": "BAD_REQUEST_ERROR",
+     "error_reason": "card_declined",
+     "error_description": "Card declined by issuing bank",
+     "customer_retry_count": 0,
+     "failed_at": "2026-08-30T20:40:00+00:00",
+     "customer_segment": "returning",
+     "source": "synthetic",
+     "razorpay_order_id": "order_TXbpNfgjNsidPU",
+     "razorpay_payment_id": null
+    }
+   }
+  },
+  {
+   "ts": 1788524511.2975867,
+   "checkout_id": "chk_8310050",
+   "agent": "diagnosis",
+   "event": "diagnosed",
+   "payload": {
+    "root_cause": "Issuer-side risk or limit block on this card, not customer error; returning customer unlikely to have wrong details.",
+    "action_id": "retry_alternate_instrument",
+    "justification": "Card declined by issuing bank with no prior retries. Steering to UPI avoids the same issuer block and is the highest-probability recovery for a low-value transaction. EMI not warranted below Rs 3000.",
+    "confidence": 0.82,
+    "llm_fallback": false
+   }
+  },
+  {
+   "ts": 1788524511.311901,
+   "checkout_id": "chk_8310050",
+   "agent": "policy_gate",
+   "event": "allowed",
+   "payload": {
+    "reason": "ok",
+    "attempts_so_far": 0
+   }
+  },
+  {
+   "ts": 1788524512.056967,
+   "checkout_id": "chk_8310050",
+   "agent": "executor",
+   "event": "execution_failed",
+   "payload": {
+    "error": "amount: amount should be minimum 1.00 for INR; first_min_partial_amount: 0 must be less than or equal to -1."
+   }
+  }
+ ]
+}

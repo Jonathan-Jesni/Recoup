@@ -94,8 +94,8 @@
   "simulated_outcomes": true,
   "llm": {
     "model": "accounts/fireworks/models/glm-5p2",
-    "calls": 166,
-    "cache_hits": 0,
+    "calls": 0,
+    "cache_hits": 166,
     "prompt_tokens": 91190,
     "completion_tokens": 55486,
     "cost_inr": 32.7188,
