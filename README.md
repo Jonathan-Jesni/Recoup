@@ -1,6 +1,6 @@
 # Recoup: AI Revenue Recovery (Razorpay Buildathon, Track 3)
 
-**The recovery agent that shows you the one rupee it actually recovered, and the model behind every rupee it didn't.**
+**The recovery agent that shows you the one rupee it actually recovered — and the model behind every rupee it didn't.**
 
 > **104 failed/abandoned Razorpay checkouts, Rs 4,25,629 at risk.**
 > Agent vs blind-retry baseline, identical seeded outcome draws per checkout.
@@ -26,8 +26,9 @@
 
 **▶ Live dashboard: [recoup-agent.vercel.app](https://recoup-agent.vercel.app)**
 
-Batch replay, per-checkout audit trails, the counterfactual, and the exception list.
-Every number on it is labelled REAL, SIMULATED or OBSERVED.
+Batch replay across all 104 checkouts, the cumulative agent-vs-baseline chart, per-checkout
+audit trails, the counterfactual, and the exception list. Every number on it is labelled REAL,
+SIMULATED or OBSERVED — and one toggle dims everything that isn't real.
 
 Recoup ingests a batch of failed and abandoned Razorpay checkouts, classifies why
 each one died, diagnoses a root cause, picks one bounded recovery action from a
@@ -37,7 +38,7 @@ honest exception list.
 
 ---
 
-## What is real vs simulated: read this first
+## What's real and what's simulated
 
 **1. Real input.** All 100 seeded checkouts are real Razorpay test-mode Orders
 (`razorpay_order_id` in [data/events.json](data/events.json)). On top of those,
@@ -159,7 +160,7 @@ prompt states and the code enforces.
 ## Scope
 
 Checkout and payment failures only. **Not doing:** subscriptions, mandates,
-B2B receivables, voice. Five days solo, and one loop closed properly beats four
+B2B receivables, voice. Five days solo — one loop closed properly beats four
 half-loops.
 
 ## Architecture
@@ -245,8 +246,11 @@ cd dashboard && npm install && npm run dev
 ```
 
 Static Next.js reading the exported run JSONs, with no API and no keys. It renders the headline
-comparison, a batch replay that walks all 104 checkouts through the pipeline in ledger order,
-the counterfactual, every checkout's per-hop audit trail with verbatim API payloads, the forced
-failure case, and the exception list.
+comparison, a 104-cell batch replay, the cumulative agent-vs-baseline chart, the counterfactual,
+every checkout's per-hop audit trail with verbatim API payloads, the forced failure case, and the
+exception list. A "show only what's real" toggle dims every simulated number on the page; what
+stays lit is Rs 4,25,629 at risk, Rs 32.72 of inference, and the one Rs 2,807 recovery.
+
+![The "show only what's real" toggle, with every simulated number dimmed](docs/dashboard-real-only-toggle.png)
 
 The audit trail shown is the ledger table itself. Nothing is reconstructed after the fact.
