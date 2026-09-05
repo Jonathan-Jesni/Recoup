@@ -86,17 +86,36 @@ export function Replay({
   );
 
   const [i, setI] = useState(0); // how many checkouts have been processed
-  const [playing, setPlaying] = useState(true); // autoplay: the page opens on motion
+  const [playing, setPlaying] = useState(false);
+  const [started, setStarted] = useState(false); // has it ever auto-started
+  const rootRef = useRef<HTMLDivElement>(null);
   const [speed, setSpeed] = useState(1);
   const [flash, setFlash] = useState(0); // bumped when money lands
   const timer = useRef<number | null>(null);
 
-  // ?replay=0 opts out — handy when grabbing a still of the finished state.
+  // Start when the panel scrolls into view, once. Autoplaying on load meant
+  // the batch was half over by the time anyone looked at it.
+  // ?replay=0 disables the auto-start (useful for grabbing a still).
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("replay") === "0") {
-      setPlaying(false);
-    }
-  }, []);
+    if (started) return;
+    if (new URLSearchParams(window.location.search).get("replay") === "0") return;
+    const el = rootRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setStarted(true);
+          setPlaying(true);
+          io.disconnect();
+        }
+      },
+      // 0.2 of a ~990px panel = ~200px visible: fires on any real window,
+      // including a short laptop viewport, but only once you have scrolled to it.
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [started]);
 
   const done = i >= ordered.length;
 
@@ -148,6 +167,7 @@ export function Replay({
   };
 
   return (
+    <div ref={rootRef}>
     <Panel
       title="Batch replay"
       subtitle="Ledger order, one checkout at a time."
@@ -302,5 +322,6 @@ export function Replay({
         </div>
       </div>
     </Panel>
+    </div>
   );
 }
