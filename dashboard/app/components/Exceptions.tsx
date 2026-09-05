@@ -45,7 +45,7 @@ export function Exceptions({
   return (
     <Panel
       title={`Exceptions — ${summary.exception_count} of ${summary.n_events}`}
-      subtitle="Nothing here is claimed as recovered. A checkout the agent could not help is a checkout it reports, not one it hides."
+      subtitle="None of these are counted as recovered."
     >
       <div className="divide-y divide-[var(--line)]">
         {entries.map(([reason, ids]) => {

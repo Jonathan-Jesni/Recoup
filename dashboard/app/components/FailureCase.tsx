@@ -23,14 +23,8 @@ export function FailureCase({ run }: { run: RunExport }) {
       title="When execution fails"
       subtitle={
         <>
-          One checkout was deliberately forced to fail. Razorpay rejected the call for real —
-          this is their error text, verbatim from the ledger.{" "}
-          <strong className="text-[var(--foreground)]">
-            Run separately as <code className="text-xs">failure-case</code>; it is not part of
-            the batch numbers above.
-          </strong>{" "}
-          The same checkout appears in the batch as a normal recovery — that is the same
-          checkout under two different runs, not a contradiction.
+          Forced failure, run separately as <code className="text-xs">failure-case</code>. Not in
+          the batch numbers above — the same checkout also appears there, recovered.
         </>
       }
       right={<Provenance kind="real" />}
@@ -97,8 +91,7 @@ export function FailureCase({ run }: { run: RunExport }) {
             </div>
           </div>
           <p className="text-xs leading-relaxed text-[var(--muted)]">
-            The failure is on the record. It is not a gap in the batch, and it is not counted
-            as a win.
+            Logged, not hidden.
           </p>
         </div>
       </div>

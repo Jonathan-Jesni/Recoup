@@ -25,14 +25,7 @@ export function CounterfactualPanel({ cf }: { cf: Cf }) {
   return (
     <Panel
       title="Counterfactual — where the decision was the difference"
-      subtitle={
-        <>
-          Outcome draws are seeded per <code className="text-xs">(checkout_id, attempt_no)</code>, so
-          both policies face <strong className="text-[var(--foreground)]">identical luck</strong> on
-          every checkout. Each one therefore has a defined result under <em>both</em> policies — and
-          the gap is attributable to the decision, not to noise.
-        </>
-      }
+      subtitle="Same draws for both policies, so the difference is the decision."
       right={<Provenance kind="simulated" />}
       sim
     >

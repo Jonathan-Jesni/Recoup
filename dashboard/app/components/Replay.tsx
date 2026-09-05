@@ -5,10 +5,9 @@ import { CheckoutTrail, fmtINR } from "@/lib/data";
 import { Panel, Provenance } from "./ui";
 
 /**
- * Replays the batch in ledger order: every checkout walks Signal → Diagnosis →
- * Gate → Executor → Outcome, the recovered counter climbs, and exceptions drop
- * into their bins. Driven by the same audit rows the table renders — this is a
- * view of the ledger, not an animation with numbers typed into it.
+ * Replays the batch in ledger order. Each checkout walks the five stages, the
+ * counter climbs, and its cell in the 104-square grid takes its outcome colour.
+ * Driven by the same audit rows the table renders.
  */
 
 type Bin = "recovered" | "escalated_after_2" | "escalated" | "unclassified" | "below_minimum";
@@ -151,7 +150,7 @@ export function Replay({
   return (
     <Panel
       title="Batch replay"
-      subtitle="Every checkout walking the pipeline in ledger order. The counter climbs as outcomes land; exceptions drop into their bins."
+      subtitle="Ledger order, one checkout at a time."
       right={<Provenance kind="simulated" />}
       sim
     >

@@ -9,6 +9,11 @@ import { Pill } from "./ui";
  * returned, and it should not look like its neighbours.
  */
 export function ObservedBand({ obs }: { obs: ObservedRecovery }) {
+  const paidOn = new Date(obs.paid_at * 1000).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+  });
+
   return (
     <section
       className="relative overflow-hidden rounded-2xl border border-emerald-500/40"
@@ -27,8 +32,8 @@ export function ObservedBand({ obs }: { obs: ObservedRecovery }) {
             <span className="inline-flex items-center rounded border border-emerald-400/60 bg-emerald-400/20 px-2 py-0.5 font-mono text-[10px] font-bold tracking-[0.18em] text-emerald-200">
               OBSERVED
             </span>
-            <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-300/80">
-              not a model · not a draw · an API said so
+            <span className="font-mono text-[11px] text-emerald-300/70">
+              paid {paidOn} · confirmed via GET /v1/payment_links
             </span>
           </div>
 
@@ -37,12 +42,9 @@ export function ObservedBand({ obs }: { obs: ObservedRecovery }) {
           </h2>
 
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
-            The agent diagnosed the failure, chose the action, and created this Razorpay payment
-            link itself. We paid it with a test card and polled until Razorpay reported{" "}
-            <code className="rounded bg-emerald-500/10 px-1 text-emerald-300">paid</code>. It is
-            flagged <code className="text-emerald-300">observed: true</code>,{" "}
-            <code className="text-emerald-300">simulated: false</code> in the ledger — the only
-            row in the project that carries those values.
+            The agent created this payment link. We paid it with a test card and polled until
+            Razorpay reported <code className="text-emerald-300">paid</code>. Flagged{" "}
+            <code className="text-emerald-300">observed: true</code> in the ledger.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -58,7 +60,7 @@ export function ObservedBand({ obs }: { obs: ObservedRecovery }) {
           </div>
           <div className="mt-2 flex items-center gap-2 text-xs text-emerald-300/70">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            paid, and confirmed by GET /v1/payment_links
+            paid in full
           </div>
         </div>
       </div>

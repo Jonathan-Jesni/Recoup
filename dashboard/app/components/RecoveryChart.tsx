@@ -66,12 +66,14 @@ export function RecoveryChart({ cf }: { cf: Cf }) {
   const finalAgent = agentPts[agentPts.length - 1][1];
   const finalBase = basePts[basePts.length - 1][1];
 
-  const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => Math.round(maxY * f));
+  // Round ticks (50k, 100k, 150k) rather than max/4 — max/4 gives 41k, 82k,
+  // 123k, which reads as machine-chosen.
+  const ticks = niceTicks(maxY);
 
   return (
     <Panel
       title="Cumulative recovery across the batch"
-      subtitle="Both policies, same 104 checkouts, same seeded draws, in ledger order. The shaded area is the difference the agent's decisions made."
+      subtitle="Both policies over the same 104 checkouts. Shaded area is the gap."
       right={<Provenance kind="simulated" />}
       sim
     >
@@ -172,6 +174,16 @@ export function RecoveryChart({ cf }: { cf: Cf }) {
       </div>
     </Panel>
   );
+}
+
+/** Ticks on a round step at or below max, aiming for 3-5 of them. */
+function niceTicks(max: number): number[] {
+  const rough = max / 4;
+  const mag = Math.pow(10, Math.floor(Math.log10(rough)));
+  const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= rough) ?? mag * 10;
+  const out: number[] = [];
+  for (let v = 0; v <= max; v += step) out.push(v);
+  return out;
 }
 
 function Legend({ color, label, value }: { color: string; label: string; value: string }) {

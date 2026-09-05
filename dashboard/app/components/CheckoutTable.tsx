@@ -47,7 +47,7 @@ export function CheckoutTable({ trails }: { trails: CheckoutTrail[] }) {
   return (
     <Panel
       title="Every checkout, every hop"
-      subtitle="The audit trail IS the ledger table — nothing here is reconstructed after the fact. Click a row to expand the verbatim payloads."
+      subtitle="Click a row for its full ledger trail."
       right={
         <div className="flex items-center gap-2">
           <button
