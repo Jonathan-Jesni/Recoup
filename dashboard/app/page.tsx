@@ -7,12 +7,15 @@ import { CounterfactualPanel } from "./components/Counterfactual";
 import { CheckoutTable } from "./components/CheckoutTable";
 import { Exceptions } from "./components/Exceptions";
 import { FailureCase } from "./components/FailureCase";
+import { ObservedBand } from "./components/ObservedBand";
+import { RecoveryChart } from "./components/RecoveryChart";
 import { Replay } from "./components/Replay";
 import { Panel } from "./components/ui";
 
 export default function Home() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const [realOnly, setRealOnly] = useState(false);
 
   useEffect(() => {
     loadAll().then(setData).catch((e) => setErr(String(e)));
@@ -57,7 +60,7 @@ export default function Home() {
   const a = data.agent.summary;
 
   return (
-    <main className="mx-auto max-w-[1400px] px-6 py-10">
+    <main className={`mx-auto max-w-[1400px] px-6 py-10 ${realOnly ? "realonly" : ""}`}>
       <header className="mb-8">
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
           <h1 className="text-2xl font-semibold tracking-tight">Recoup</h1>
@@ -83,15 +86,46 @@ export default function Home() {
             {data.agent.audit.length} audit rows
           </span>
         </div>
+
+        {/* The thesis as a switch. Nothing is hidden — the simulated parts are
+            drained, so you can see how much of this page is a model. */}
+        <button
+          onClick={() => setRealOnly((v) => !v)}
+          className={`mt-4 inline-flex items-center gap-2.5 rounded-lg border px-3.5 py-2 text-sm transition-colors ${
+            realOnly
+              ? "border-emerald-500/50 bg-emerald-500/15 text-emerald-300"
+              : "border-[var(--line)] bg-[var(--panel)] text-[var(--muted)] hover:text-[var(--foreground)]"
+          }`}
+        >
+          <span
+            className={`relative h-4 w-7 rounded-full transition-colors ${
+              realOnly ? "bg-emerald-500/70" : "bg-[var(--line)]"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 h-3 w-3 rounded-full bg-white transition-all ${
+                realOnly ? "left-3.5" : "left-0.5"
+              }`}
+            />
+          </span>
+          Show only what&apos;s real
+          <span className="font-mono text-[11px] opacity-70">
+            {realOnly ? "simulation dimmed" : "everything shown"}
+          </span>
+        </button>
       </header>
 
       <div className="space-y-6">
         <Headline data={data} />
+        {data.observed?.summary.observed_recovery?.observed && (
+          <ObservedBand obs={data.observed.summary.observed_recovery} />
+        )}
         <Replay
           trails={trails}
           atRisk={a.at_risk_inr}
           totalRecovered={a.recovered_inr}
         />
+        <RecoveryChart cf={data.cf} />
         <CounterfactualPanel cf={data.cf} />
         <CheckoutTable trails={trails} />
         {data.failure && <FailureCase run={data.failure} />}

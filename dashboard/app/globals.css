@@ -53,3 +53,31 @@ body {
   25%  { color: #6ee7b7; text-shadow: 0 0 18px rgba(52, 211, 153, 0.55); }
   100% { color: var(--color-emerald-400, #34d399); text-shadow: none; }
 }
+
+/* ---- depth: panels sit above the page instead of being outlines on flat ---- */
+.panel-depth {
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 8px 24px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* ---- "show only what's real" -------------------------------------------
+   The thesis as a button. Anything derived from the seeded model carries
+   data-sim; flipping the switch drains it, leaving only what a real API
+   actually returned. Nothing is hidden — it is dimmed, so the reader sees
+   exactly how much of the page is simulation. */
+.realonly [data-sim] {
+  opacity: 0.18;
+  filter: saturate(0.15);
+  transition: opacity 220ms ease, filter 220ms ease;
+}
+[data-sim] {
+  transition: opacity 220ms ease, filter 220ms ease;
+}
+
+/* ---- the observed band: the one number that is not a model -------------- */
+@keyframes observedpulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  50%      { box-shadow: 0 0 40px -8px rgba(16, 185, 129, 0.35); }
+}

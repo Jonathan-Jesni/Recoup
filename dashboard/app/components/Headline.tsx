@@ -6,7 +6,6 @@ import { Panel, Pill, Provenance, Tile } from "./ui";
 export function Headline({ data }: { data: DashboardData }) {
   const a = data.agent.summary;
   const b = data.baseline.summary;
-  const obs = data.observed?.summary.observed_recovery;
 
   const delta = a.recovered_inr - b.recovered_inr;
   const aPerLink = a.links_created / Math.max(a.recovered_count, 1);
@@ -27,12 +26,14 @@ export function Headline({ data }: { data: DashboardData }) {
           sub={`${a.recovered_count} checkouts · ${fmtPct(a.recovery_rate_value)} of value`}
           badge={<Provenance kind="simulated" />}
           accent
+          sim
         />
         <Tile
           label="Recovered — baseline"
           value={fmtINR(b.recovered_inr)}
           sub={`${b.recovered_count} checkouts · ${fmtPct(b.recovery_rate_value)} of value`}
           badge={<Provenance kind="simulated" />}
+          sim
         />
         <Tile
           label="Inference cost"
@@ -45,7 +46,7 @@ export function Headline({ data }: { data: DashboardData }) {
       {/* The finding that is not in the rupee delta: fewer interventions, more
           recoveries. Every link is a real API call and a real customer contact. */}
       <div className="grid gap-4 lg:grid-cols-3">
-        <Panel className="lg:col-span-2">
+        <Panel className="lg:col-span-2" sim>
           <div className="grid gap-px overflow-hidden rounded-xl bg-[var(--line)] sm:grid-cols-3">
             <Efficiency
               label="Payment links created"
@@ -84,7 +85,7 @@ export function Headline({ data }: { data: DashboardData }) {
           </p>
         </Panel>
 
-        <Panel>
+        <Panel sim>
           <div className="p-5">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
@@ -104,34 +105,6 @@ export function Headline({ data }: { data: DashboardData }) {
         </Panel>
       </div>
 
-      {obs?.observed && (
-        <Panel className="border-emerald-500/30 bg-emerald-500/[0.05]">
-          <div className="flex flex-wrap items-start justify-between gap-4 p-5">
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <Provenance kind="observed" />
-                <span className="text-[13px] font-semibold uppercase tracking-[0.14em] text-emerald-300">
-                  One recovery is not simulated
-                </span>
-              </div>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
-                {obs.note}
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <Pill tone="good">{obs.checkout_id}</Pill>
-                <Pill>{obs.plink_id}</Pill>
-                <Pill>ref {obs.reference_id}</Pill>
-              </div>
-            </div>
-            <div className="tnum text-right">
-              <div className="text-3xl font-semibold text-emerald-400">
-                {fmtINR(obs.amount_paid_inr)}
-              </div>
-              <div className="mt-1 text-xs text-[var(--muted)]">paid &amp; confirmed via API</div>
-            </div>
-          </div>
-        </Panel>
-      )}
     </div>
   );
 }

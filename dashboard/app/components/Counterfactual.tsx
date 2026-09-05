@@ -34,6 +34,7 @@ export function CounterfactualPanel({ cf }: { cf: Cf }) {
         </>
       }
       right={<Provenance kind="simulated" />}
+      sim
     >
       <div className="grid gap-px bg-[var(--line)] sm:grid-cols-4">
         {(Object.keys(CLASS_META) as CfClass[]).map((k) => {

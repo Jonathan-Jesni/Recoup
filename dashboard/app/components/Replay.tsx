@@ -25,6 +25,14 @@ const BIN_META: Record<Bin, { label: string; color: string; ring: string }> = {
   below_minimum: { label: "Below ₹50", color: "text-slate-400", ring: "border-slate-600/40" },
 };
 
+const BIN_CELL: Record<Bin, string> = {
+  recovered: "bg-emerald-400",
+  escalated_after_2: "bg-slate-600",
+  escalated: "bg-amber-400/80",
+  unclassified: "bg-amber-300",
+  below_minimum: "bg-slate-700",
+};
+
 const STAGES = ["signal", "diagnosis", "policy_gate", "executor", "outcome"] as const;
 const TICK_MS = 190; // per checkout at 1x; 104 checkouts ~= 20s
 
@@ -79,16 +87,15 @@ export function Replay({
   );
 
   const [i, setI] = useState(0); // how many checkouts have been processed
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true); // autoplay: the page opens on motion
   const [speed, setSpeed] = useState(1);
   const [flash, setFlash] = useState(0); // bumped when money lands
   const timer = useRef<number | null>(null);
 
-  // ?replay=1 autoplays on load, so the video opens on motion rather than
-  // on a cursor hunting for a button.
+  // ?replay=0 opts out — handy when grabbing a still of the finished state.
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("replay") === "1") {
-      setPlaying(true);
+    if (new URLSearchParams(window.location.search).get("replay") === "0") {
+      setPlaying(false);
     }
   }, []);
 
@@ -146,6 +153,7 @@ export function Replay({
       title="Batch replay"
       subtitle="Every checkout walking the pipeline in ledger order. The counter climbs as outcomes land; exceptions drop into their bins."
       right={<Provenance kind="simulated" />}
+      sim
     >
       <div className="border-b border-[var(--line)] px-5 py-4">
         <div className="flex flex-wrap items-center gap-3">
@@ -250,31 +258,47 @@ export function Replay({
           </div>
         </div>
 
-        {/* right: exception bins filling up */}
+        {/* right: one cell per checkout, filling in ledger order */}
         <div className="bg-[var(--panel)] p-5">
-          <div className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted)]">
-            Where they land
+          <div className="flex items-baseline justify-between">
+            <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted)]">
+              Every checkout in the batch
+            </span>
+            <span className="tnum font-mono text-[11px] text-[var(--muted)]">
+              {i} / {ordered.length}
+            </span>
           </div>
-          <div className="mt-3 space-y-2">
-            {(Object.keys(BIN_META) as Bin[]).map((b) => {
-              const meta = BIN_META[b];
-              const n = bins[b];
-              const pct = i === 0 ? 0 : (n / i) * 100;
+
+          <div
+            className="mt-3 grid gap-[3px]"
+            style={{ gridTemplateColumns: "repeat(auto-fill, minmax(14px, 1fr))" }}
+          >
+            {ordered.map((t, idx) => {
+              const settled = idx < i;
+              const active = idx === i - 1;
+              const b = binOf(t);
               return (
-                <div key={b} className="flex items-center gap-3">
-                  <span className="w-40 shrink-0 text-xs text-[var(--muted)]">{meta.label}</span>
-                  <div className="h-5 flex-1 overflow-hidden rounded bg-[var(--panel2)]">
-                    <div
-                      className={`h-full border-r-2 transition-[width] duration-150 ease-linear ${meta.ring} ${
-                        b === "recovered" ? "bg-emerald-500/30" : "bg-slate-500/20"
-                      }`}
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                  <span className={`tnum w-8 text-right font-mono text-sm ${meta.color}`}>{n}</span>
-                </div>
+                <span
+                  key={t.checkout_id}
+                  title={`${t.checkout_id} · ${fmtINR(t.amount_inr)} · ${t.outcome_label}`}
+                  className={`aspect-square rounded-[2px] transition-colors duration-200 ${
+                    settled ? BIN_CELL[b] : "bg-[var(--panel2)]"
+                  } ${active ? "ring-2 ring-white/70" : ""}`}
+                />
               );
             })}
+          </div>
+
+          <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1.5 sm:grid-cols-3">
+            {(Object.keys(BIN_META) as Bin[]).map((b) => (
+              <div key={b} className="flex items-center gap-2 text-[11px]">
+                <span className={`h-2.5 w-2.5 shrink-0 rounded-[2px] ${BIN_CELL[b]}`} />
+                <span className="min-w-0 flex-1 truncate text-[var(--muted)]">
+                  {BIN_META[b].label}
+                </span>
+                <span className={`tnum font-mono ${BIN_META[b].color}`}>{bins[b]}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

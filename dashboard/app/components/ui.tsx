@@ -6,16 +6,20 @@ export function Panel({
   right,
   children,
   className = "",
+  sim = false,
 }: {
   title?: string;
   subtitle?: ReactNode;
   right?: ReactNode;
   children: ReactNode;
   className?: string;
+  /** Everything in this panel is drawn from the seeded model, not an API. */
+  sim?: boolean;
 }) {
   return (
     <section
-      className={`rounded-xl border border-[var(--line)] bg-[var(--panel)] ${className}`}
+      {...(sim ? { "data-sim": "" } : {})}
+      className={`panel-depth rounded-xl border border-[var(--line)] bg-[var(--panel)] ${className}`}
     >
       {(title || right) && (
         <header className="flex items-start justify-between gap-4 border-b border-[var(--line)] px-5 py-4">
@@ -62,16 +66,19 @@ export function Tile({
   sub,
   badge,
   accent = false,
+  sim = false,
 }: {
   label: string;
   value: ReactNode;
   sub?: ReactNode;
   badge?: ReactNode;
   accent?: boolean;
+  sim?: boolean;
 }) {
   return (
     <div
-      className={`rounded-xl border p-4 ${
+      {...(sim ? { "data-sim": "" } : {})}
+      className={`panel-depth rounded-xl border p-4 ${
         accent
           ? "border-emerald-500/30 bg-emerald-500/[0.07]"
           : "border-[var(--line)] bg-[var(--panel)]"
